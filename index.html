@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A. Varela · Portafolio · Honduras</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink:#0e0e0e; --paper:#f5f5f5; --paper2:#e0f7fa; --paper3:#b2ebf2;
+  --red:#c8371a; --teal:#00818E; --teal2:#00A6CB; --teal-light:#BFF9FF;
+  --muted:#6a6a6a; --border:rgba(14,14,14,.08); --border2:rgba(14,14,14,.15);
+  --mono:'IBM Plex Mono',monospace; --serif:'Playfair Display',serif; --sans:'Syne',sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.6;overflow-x:hidden;}
+
+/* TICKER */
+.ticker{background:var(--ink);color:var(--paper);font-family:var(--mono);font-size:.62rem;letter-spacing:.08em;padding:.4rem 0;overflow:hidden;white-space:nowrap;}
+.ticker-inner{display:inline-flex;gap:2.5rem;animation:tick 28s linear infinite;}
+.ticker-dot{width:5px;height:5px;border-radius:50%;background:var(--red);display:inline-block;margin-right:.5rem;}
+@keyframes tick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* NAV */
+nav{background:var(--paper);border-bottom:1px solid var(--border2);display:flex;align-items:center;justify-content:space-between;padding:1rem 3rem;position:sticky;top:0;z-index:100;}
+.nav-brand{text-decoration:none;color:var(--ink);}
+.nav-name{font-family:var(--serif);font-size:1rem;font-weight:700;display:block;letter-spacing:-.02em;}
+.nav-role{font-family:var(--mono);font-size:.58rem;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;}
+.nav-links{display:flex;align-items:center;gap:1.75rem;list-style:none;}
+.nav-links a{font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .2s;}
+.nav-links a:hover{color:var(--ink);}
+.nav-cta{background:var(--teal)!important;color:#fff!important;padding:.4rem 1.1rem;border-radius:2px;font-family:var(--mono)!important;font-size:.65rem!important;}
+
+/* HERO */
+.hero{min-height:88vh;display:grid;grid-template-columns:1.1fr .9fr;border-bottom:1px solid var(--border2);position:relative;overflow:hidden;}
+.hero-left{padding:5rem 3rem 4rem;display:flex;flex-direction:column;justify-content:flex-end;border-right:1px solid var(--border2);}
+.hero-right{padding:4rem 3rem;display:flex;flex-direction:column;justify-content:center;background:var(--teal);color:var(--paper);position:relative;overflow:hidden;}
+.hero-grid-bg{position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 39px,rgba(255,255,255,.03) 39px,rgba(255,255,255,.03) 40px),repeating-linear-gradient(90deg,transparent,transparent 39px,rgba(255,255,255,.03) 39px,rgba(255,255,255,.03) 40px);pointer-events:none;}
+.hero-eyebrow{font-family:var(--mono);font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:var(--teal2);margin-bottom:1.25rem;display:flex;align-items:center;gap:.75rem;animation:fu .7s ease both;}
+.hero-eyebrow::before{content:'';width:20px;height:1px;background:var(--teal);}
+.hero-title{font-family:var(--serif);font-size:clamp(2.6rem,5vw,4.8rem);font-weight:700;line-height:1.05;letter-spacing:-.03em;margin-bottom:1.5rem;animation:fu .8s .1s ease both;}
+.hero-title em{font-style:italic;color:var(--red);}
+.hero-bio{font-size:.88rem;color:var(--muted);line-height:1.8;max-width:420px;margin-bottom:2.5rem;border-left:2px solid var(--border2);padding-left:1rem;animation:fu .9s .2s ease both;}
+.hero-btns{display:flex;gap:.75rem;animation:fu 1s .3s ease both;}
+.btn-red{background:var(--teal);color:#fff;font-family:var(--mono);font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;padding:.75rem 1.75rem;border:none;border-radius:2px;cursor:pointer;text-decoration:none;display:inline-block;transition:opacity .2s,transform .2s;}
+.btn-red:hover{opacity:.88;transform:translateY(-1px);}
+.btn-outline{background:transparent;color:var(--ink);font-family:var(--mono);font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;padding:.75rem 1.75rem;border:1px solid var(--border2);border-radius:2px;cursor:pointer;text-decoration:none;display:inline-block;transition:background .2s;}
+.btn-outline:hover{background:var(--paper3);}
+.hero-watermark{position:absolute;bottom:-3rem;left:-1rem;font-family:var(--serif);font-size:13rem;font-weight:700;color:rgba(14,14,14,.03);pointer-events:none;user-select:none;line-height:1;}
+
+/* Hero demo */
+.hero-demo{position:relative;z-index:1;padding:1.5rem;}
+.demo-label{font-family:var(--mono);font-size:.58rem;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:1rem;display:flex;align-items:center;gap:.5rem;}
+.demo-label::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--red);animation:blink 2s ease infinite;}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
+.demo-title{font-family:var(--serif);font-size:1.3rem;font-weight:700;color:#fff;margin-bottom:.5rem;line-height:1.2;}
+.demo-sub{font-family:var(--mono);font-size:.65rem;color:rgba(255,255,255,.4);margin-bottom:1.5rem;}
+.mini-chart{display:flex;flex-direction:column;gap:7px;margin-bottom:1.5rem;}
+.mc-row{display:flex;align-items:center;gap:8px;}
+.mc-label{font-family:var(--mono);font-size:.58rem;color:rgba(255,255,255,.45);width:86px;text-align:right;flex-shrink:0;}
+.mc-track{flex:1;height:14px;background:rgba(255,255,255,.06);border-radius:1px;overflow:hidden;position:relative;}
+.mc-fill{height:100%;border-radius:1px;display:flex;align-items:center;padding-left:6px;transition:width 1s ease;}
+.mc-val{font-family:var(--mono);font-size:.55rem;color:rgba(255,255,255,.5);white-space:nowrap;}
+.demo-controls{display:flex;gap:.4rem;flex-wrap:wrap;}
+.demo-btn{font-family:var(--mono);font-size:.6rem;letter-spacing:.06em;padding:.3rem .75rem;border-radius:2px;border:1px solid rgba(255,255,255,.15);background:transparent;color:rgba(255,255,255,.5);cursor:pointer;transition:all .2s;}
+.demo-btn.active,.demo-btn:hover{background:rgba(255,255,255,.1);color:#fff;border-color:rgba(255,255,255,.3);}
+@keyframes fu{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+
+/* SECTION */
+.sec{max-width:1280px;margin:0 auto;padding:5rem 2rem;}
+.sec-header{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:1.25rem;margin-bottom:3rem;}
+.sec-num{font-family:var(--mono);font-size:.62rem;color:var(--teal);letter-spacing:.1em;}
+.sec-line{height:1px;background:var(--border2);}
+.sec-label{font-family:var(--mono);font-size:.62rem;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;}
+.sec-title{font-family:var(--serif);font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:700;letter-spacing:-.02em;margin-bottom:.5rem;}
+.sec-title em{font-style:italic;color:var(--red);}
+.sec-sub{font-size:.88rem;color:var(--muted);line-height:1.7;max-width:520px;}
+
+/* PROJECT BLOCKS */
+.project-block{border:1px solid var(--border2);border-radius:4px;overflow:hidden;margin-bottom:2rem;}
+.pb-header{display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid var(--border2);}
+.pb-info{padding:2.5rem;display:flex;flex-direction:column;justify-content:space-between;}
+.pb-demo{background:var(--teal);padding:2rem;position:relative;overflow:hidden;}
+.pb-demo-grid{position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 23px,rgba(255,255,255,.025) 23px,rgba(255,255,255,.025) 24px),repeating-linear-gradient(90deg,transparent,transparent 23px,rgba(255,255,255,.025) 23px,rgba(255,255,255,.025) 24px);pointer-events:none;}
+.pb-cat{font-family:var(--mono);font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--teal2);margin-bottom:.75rem;display:flex;align-items:center;gap:.5rem;}
+.pb-cat::before{content:'';width:10px;height:1px;background:var(--teal2);}
+.pb-title{font-family:var(--serif);font-size:clamp(1.2rem,2.2vw,1.8rem);font-weight:700;letter-spacing:-.02em;margin-bottom:.75rem;line-height:1.2;}
+.pb-title em{font-style:italic;color:var(--red);}
+.pb-desc{font-size:.82rem;color:var(--muted);line-height:1.75;margin-bottom:1.5rem;}
+.pb-tags{display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:1.5rem;}
+.pb-tag{font-family:var(--mono);font-size:.56rem;letter-spacing:.06em;background:var(--paper3);color:var(--muted);padding:.22rem .55rem;border-radius:2px;}
+.pb-link{font-family:var(--mono);font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;color:var(--teal);text-decoration:none;display:inline-flex;align-items:center;gap:.4rem;transition:gap .2s;}
+.pb-link:hover{gap:.7rem;}
+
+/* UPCOMING STORIES */
+.upcoming{border:1px solid var(--border2);border-radius:4px;overflow:hidden;margin-bottom:2rem;background:var(--paper2);}
+.up-header{padding:1.25rem 1.5rem;border-bottom:1px solid rgba(0,129,142,.2);display:flex;align-items:center;justify-content:space-between;background:#e0f7fa;}
+.up-title{font-family:var(--mono);font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);}
+.up-badge{font-family:var(--mono);font-size:.58rem;background:var(--paper3);color:var(--muted);padding:.2rem .6rem;border-radius:2px;}
+.up-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border2);}
+.up-card{background:#e0f7fa;padding:1.25rem 1.5rem;}
+.up-num{font-family:var(--mono);font-size:.58rem;color:var(--teal);margin-bottom:.4rem;letter-spacing:.08em;}
+.up-name{font-family:var(--serif);font-size:1rem;font-weight:700;margin-bottom:.4rem;line-height:1.25;color:var(--ink);}
+.up-desc{font-size:.78rem;color:var(--muted);line-height:1.6;}
+.up-needs{font-family:var(--mono);font-size:.6rem;color:var(--teal);margin-top:.6rem;padding-top:.6rem;border-top:1px solid rgba(0,129,142,.2);}
+
+/* IHSS Quiz */
+.ihss-demo{position:relative;z-index:1;}
+.ihss-question{font-family:var(--serif);font-size:1rem;color:#fff;font-style:italic;margin-bottom:1.25rem;line-height:1.4;}
+.ihss-options{display:flex;flex-direction:column;gap:.5rem;margin-bottom:.75rem;}
+.ihss-opt{font-family:var(--mono);font-size:.68rem;padding:.65rem 1rem;border:1px solid rgba(255,255,255,.12);background:none;color:rgba(255,255,255,.55);cursor:pointer;border-radius:2px;text-align:left;transition:all .2s;letter-spacing:.04em;}
+.ihss-opt:hover:not(:disabled){background:rgba(255,255,255,.06);color:#fff;}
+.ihss-opt.correct{background:rgba(0,129,142,.25);border-color:var(--teal);color:#BFF9FF;}
+.ihss-opt.wrong{background:rgba(200,55,26,.15);border-color:var(--red);color:rgba(255,130,110,.9);}
+.ihss-feedback{font-family:var(--mono);font-size:.65rem;color:rgba(255,255,255,.45);line-height:1.6;display:none;padding:.75rem 1rem;background:rgba(255,255,255,.04);border-radius:2px;border-left:2px solid var(--red);}
+.ihss-feedback.show{display:block;}
+.ihss-next{font-family:var(--mono);font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;background:var(--teal);color:#fff;border:none;padding:.5rem 1.25rem;border-radius:2px;cursor:pointer;margin-top:.75rem;display:none;}
+.ihss-next.show{display:inline-block;}
+.ihss-pips{display:flex;gap:4px;margin-bottom:1.25rem;}
+.ihss-pip{height:3px;flex:1;background:rgba(255,255,255,.1);border-radius:2px;transition:background .4s;}
+.ihss-pip.done{background:var(--teal);}
+.ihss-pip.active{background:rgba(200,55,26,.5);}
+
+/* Scroll chapters */
+.scroll-demo{position:relative;z-index:1;height:320px;overflow:hidden;}
+.scroll-chapter{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:1.5rem;transition:opacity .5s,transform .5s;opacity:0;transform:translateY(20px);}
+.scroll-chapter.active{opacity:1;transform:translateY(0);}
+.scroll-chapter-bg{position:absolute;inset:0;background:linear-gradient(to top,rgba(14,14,14,.95) 40%,rgba(14,14,14,.4) 100%);}
+.scroll-chapter-img{position:absolute;inset:0;font-size:5rem;display:flex;align-items:center;justify-content:center;opacity:.15;}
+.sc-num{font-family:var(--mono);font-size:.6rem;letter-spacing:.15em;color:var(--teal2);margin-bottom:.4rem;position:relative;z-index:1;}
+.sc-title{font-family:var(--serif);font-size:1.3rem;font-weight:700;color:#fff;margin-bottom:.4rem;position:relative;z-index:1;line-height:1.2;}
+.sc-hook{font-size:.75rem;color:rgba(255,255,255,.55);position:relative;z-index:1;line-height:1.5;margin-bottom:.75rem;}
+.sc-tag{font-family:var(--mono);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:var(--teal2);border:1px solid rgba(0,166,203,.4);padding:.2rem .5rem;border-radius:2px;position:relative;z-index:1;display:inline-block;}
+.scroll-nav{display:flex;align-items:center;justify-content:space-between;margin-top:.75rem;position:relative;z-index:1;}
+.scroll-dots{display:flex;gap:5px;}
+.scroll-dot{width:22px;height:3px;background:rgba(255,255,255,.15);border-radius:2px;cursor:pointer;transition:background .3s;}
+.scroll-dot.active{background:var(--teal2);}
+.scroll-arrow{font-family:var(--mono);font-size:.65rem;color:rgba(255,255,255,.4);background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);padding:.35rem .8rem;border-radius:2px;cursor:pointer;transition:all .2s;}
+.scroll-arrow:hover{background:rgba(255,255,255,.12);color:#fff;}
+
+/* SKILLS BAND */
+.skills-band{background:var(--teal);color:var(--paper);padding:4rem 2rem;border-top:1px solid var(--border2);}
+.skills-inner{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:1fr 2fr;gap:4rem;align-items:start;}
+.skills-title{font-family:var(--serif);font-size:clamp(1.8rem,3vw,2.5rem);font-weight:700;letter-spacing:-.02em;margin-bottom:.75rem;}
+.skills-title em{font-style:italic;color:var(--red);}
+.skills-sub{font-size:.85rem;color:rgba(255,255,255,.45);line-height:1.7;}
+.skills-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(255,255,255,.1);}
+.skill-cell{background:var(--teal);padding:1.5rem;transition:background .2s;}
+.skill-cell:hover{background:rgba(255,255,255,.08);}
+.skill-icon{font-family:var(--mono);font-size:.7rem;font-weight:500;color:var(--teal2);margin-bottom:.5rem;letter-spacing:.05em;}
+.skill-name{font-size:.88rem;font-weight:500;color:var(--paper);margin-bottom:.25rem;}
+.skill-desc{font-size:.75rem;color:rgba(255,255,255,.35);line-height:1.5;}
+
+/* CONTACT */
+.contact-band{padding:5rem 2rem;background:#e0f7fa;border-top:1px solid rgba(0,129,142,.2);}
+.contact-inner{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;}
+.contact-title{font-family:var(--serif);font-size:clamp(2rem,4vw,3rem);font-weight:700;letter-spacing:-.02em;line-height:1.1;margin-bottom:1rem;}
+.contact-title em{font-style:italic;color:var(--red);}
+.contact-body{font-size:.88rem;color:var(--muted);line-height:1.75;margin-bottom:2rem;}
+.contact-list{display:flex;flex-direction:column;gap:.6rem;}
+.contact-item{background:var(--paper);border:1px solid var(--border2);border-radius:3px;padding:.9rem 1.1rem;display:flex;align-items:center;gap:.9rem;text-decoration:none;color:var(--ink);transition:border-color .2s,transform .2s;}
+.contact-item:hover{border-color:var(--teal);transform:translateX(4px);}
+.ci-tag{font-family:var(--mono);font-size:.58rem;background:#BFF9FF;padding:.2rem .5rem;border-radius:2px;color:var(--teal);min-width:32px;text-align:center;}
+.ci-val{font-size:.82rem;color:var(--ink);}
+
+footer{background:#0e0e0e;padding:1.5rem 3rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;}
+.f-brand{font-family:var(--serif);font-size:.9rem;color:rgba(255,255,255,.5);font-style:italic;}
+.f-copy{font-family:var(--mono);font-size:.58rem;color:rgba(255,255,255,.2);letter-spacing:.06em;}
+.f-links{display:flex;gap:1.25rem;list-style:none;}
+.f-links a{font-family:var(--mono);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.25);text-decoration:none;transition:color .2s;}
+.f-links a:hover{color:rgba(255,255,255,.6);}
+
+@media(max-width:900px){
+  nav{padding:1rem 1.5rem;} .nav-links{display:none;}
+  .hero{grid-template-columns:1fr;} .hero-right{display:none;}
+  .hero-left{padding:5rem 1.5rem 3rem;}
+  .pb-header{grid-template-columns:1fr;}
+  .up-grid{grid-template-columns:1fr;}
+  .skills-inner{grid-template-columns:1fr;}
+  .contact-inner{grid-template-columns:1fr;}
+  footer{flex-direction:column;text-align:center;}
+}
+</style>
+</head>
+<body>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-inner">
+    <span><span class="ticker-dot"></span>Análisis de datos · Honduras</span>
+    <span><span class="ticker-dot"></span>IHSS: 4.4M casos · 2016–2025</span>
+    <span><span class="ticker-dot"></span>Narrativa visual · Reportaje</span>
+    <span><span class="ticker-dot"></span>Scrollytelling · Data viz</span>
+    <span><span class="ticker-dot"></span>Disponible para proyectos</span>
+    <span><span class="ticker-dot"></span>Centroamérica · Datos + Narrativa</span>
+    <span><span class="ticker-dot"></span>Análisis de datos · Honduras</span>
+    <span><span class="ticker-dot"></span>IHSS: 4.4M casos · 2016–2025</span>
+    <span><span class="ticker-dot"></span>Narrativa visual · Reportaje</span>
+    <span><span class="ticker-dot"></span>Scrollytelling · Data viz</span>
+    <span><span class="ticker-dot"></span>Disponible para proyectos</span>
+    <span><span class="ticker-dot"></span>Centroamérica · Datos + Narrativa</span>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-brand">
+    <span class="nav-name">A. Varela</span>
+    <span class="nav-role">Analista · Honduras</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#proyectos">Proyectos</a></li>
+    <li><a href="#servicios">Sobre mí</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+    <li><a href="#contacto" class="nav-cta">Escribirme</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-watermark">Data</div>
+  <div class="hero-left">
+    <div class="hero-eyebrow">Portafolio 2025</div>
+    <h1 class="hero-title">Los datos<br>cuentan<br><em>historias.</em><br>Yo las escribo.</h1>
+    <p class="hero-bio">Analista y narradora de datos con enfoque en Honduras y Centroamérica. Convierto bases de datos públicas en reportajes de impacto con visualizaciones interactivas.</p>
+    <div class="hero-btns">
+      <a href="#proyectos" class="btn-red">Ver proyectos</a>
+      <a href="#contacto" class="btn-outline">Escribirme</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-grid-bg"></div>
+    <div class="hero-demo">
+      <div class="demo-label">Demo en vivo · IHSS Honduras</div>
+      <div class="demo-title">Enfermedades más frecuentes</div>
+      <div class="demo-sub">Selecciona un filtro para ver cómo cambian los datos</div>
+      <div class="mini-chart" id="heroChart">
+        <div class="mc-row"><span class="mc-label">Hipertensión</span><div class="mc-track"><div class="mc-fill" id="b1" style="width:100%;background:#c8371a;"><span class="mc-val">1.07M</span></div></div></div>
+        <div class="mc-row"><span class="mc-label">Resfriado</span><div class="mc-track"><div class="mc-fill" id="b2" style="width:56%;background:#1a6bc8;"><span class="mc-val">607K</span></div></div></div>
+        <div class="mc-row"><span class="mc-label">Diabetes T2</span><div class="mc-track"><div class="mc-fill" id="b3" style="width:30%;background:#b8860b;"><span class="mc-val">325K</span></div></div></div>
+        <div class="mc-row"><span class="mc-label">Faringitis</span><div class="mc-track"><div class="mc-fill" id="b4" style="width:14%;background:#1a7a4a;"><span class="mc-val">147K</span></div></div></div>
+        <div class="mc-row"><span class="mc-label">Diarrea</span><div class="mc-track"><div class="mc-fill" id="b5" style="width:12%;background:#7a4a9a;"><span class="mc-val">135K</span></div></div></div>
+      </div>
+      <div class="demo-controls">
+        <button class="demo-btn active" onclick="setFilter('total',this)">Total</button>
+        <button class="demo-btn" onclick="setFilter('fem',this)">Femenino</button>
+        <button class="demo-btn" onclick="setFilter('masc',this)">Masculino</button>
+        <button class="demo-btn" onclick="setFilter('mayor60',this)">+60 años</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROYECTOS -->
+<section id="proyectos">
+<div class="sec">
+  <div class="sec-header">
+    <span class="sec-num">01</span><div class="sec-line"></div><span class="sec-label">Proyectos</span>
+  </div>
+  <h2 class="sec-title">Trabajos <em>publicados</em></h2>
+  <p class="sec-sub" style="margin-bottom:3rem;">Análisis de datos, reportajes interactivos y narrativas visuales sobre Honduras y Centroamérica.</p>
+
+  <!-- PROYECTO 1: IHSS -->
+  <div class="project-block">
+    <div class="pb-header">
+      <div class="pb-info">
+        <div>
+          <div class="pb-cat">Salud pública · Honduras · 2025</div>
+          <h3 class="pb-title">Enfermedades en el IHSS: ¿qué dicen sobre la <em>salud</em> de los hondureños?</h3>
+          <p class="pb-desc">Análisis de 4.4 millones de casos registrados entre 2016 y 2025. Hipertensión, diabetes y enfermedades prevenibles dominan el sistema. Incluye quiz interactivo, explorador por edad y tendencia temporal 2016–2025.</p>
+          <div class="pb-tags">
+            <span class="pb-tag">20,056 registros</span>
+            <span class="pb-tag">Quiz interactivo</span>
+            <span class="pb-tag">Visualización dinámica</span>
+            <span class="pb-tag">Fuente: IHSS oficial</span>
+          </div>
+        </div>
+        <a href="reportaje-ihss-honduras.html" class="pb-link">Ver reportaje completo →</a>
+      </div>
+      <div class="pb-demo">
+        <div class="pb-demo-grid"></div>
+        <div class="ihss-demo">
+          <div class="ihss-pips" id="quizProgress">
+            <div class="ihss-pip active"></div>
+            <div class="ihss-pip"></div>
+            <div class="ihss-pip"></div>
+          </div>
+          <div id="quizBox">
+            <div class="ihss-question" id="quizQ">"¿Cuál es la enfermedad más registrada en el IHSS entre 2016 y 2025?"</div>
+            <div class="ihss-options" id="quizOpts">
+              <button class="ihss-opt" onclick="answer(this,false)">A. Diabetes mellitus tipo 2</button>
+              <button class="ihss-opt" onclick="answer(this,true)">B. Hipertensión esencial</button>
+              <button class="ihss-opt" onclick="answer(this,false)">C. Resfriado común</button>
+              <button class="ihss-opt" onclick="answer(this,false)">D. Faringitis aguda</button>
+            </div>
+            <div class="ihss-feedback" id="quizFeedback"></div>
+            <button class="ihss-next" id="quizNext" onclick="nextQ()">Siguiente →</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PRÓXIMAS HISTORIAS DEL IHSS -->
+  <div class="upcoming">
+    <div class="up-header">
+      <span class="up-title">Próximas investigaciones — mismos datos IHSS</span>
+      <span class="up-badge">En desarrollo</span>
+    </div>
+    <div class="up-grid">
+      <div class="up-card">
+        <div class="up-num">Investigación 02</div>
+        <div class="up-name">La deuda sanitaria de la pandemia</div>
+        <div class="up-desc">Los registros de hipertensión cayeron un 51% en 2020. ¿Qué pasó con esos pacientes? Análisis de la brecha de consultas y sus consecuencias.</div>
+        <div class="up-needs">Pendiente: fuente médica · SESAL 2020–2021</div>
+      </div>
+      <div class="up-card">
+        <div class="up-num">Investigación 03</div>
+        <div class="up-name">El mapa de la desigualdad sanitaria</div>
+        <div class="up-desc">El 87% de los casos en dos departamentos. Correlación entre cobertura IHSS por municipio y niveles de pobreza del INE.</div>
+        <div class="up-needs">Pendiente: datos INE · investigador UNAH</div>
+      </div>
+      <div class="up-card">
+        <div class="up-num">Investigación 04</div>
+        <div class="up-name">Hipertensión: la epidemia silenciosa</div>
+        <div class="up-desc">Análisis específico por unidad médica, distribución territorial y comparación con promedios regionales OPS.</div>
+        <div class="up-needs">Pendiente: cardiólogo o internista IHSS</div>
+      </div>
+      <div class="up-card">
+        <div class="up-num">Investigación 05</div>
+        <div class="up-name">La consulta pediátrica saturada</div>
+        <div class="up-desc">607,000 consultas por resfriado común. ¿Qué dice eso del acceso a atención primaria en Honduras?</div>
+        <div class="up-needs">Pendiente: pediatra IHSS · datos SESAL</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROYECTO 2: HOGAR DIAMANTE -->
+  <div class="project-block">
+    <div class="pb-header" style="grid-template-columns:1fr 1fr;">
+      <div class="pb-demo" style="order:1;">
+        <div class="pb-demo-grid"></div>
+        <div class="scroll-demo">
+          <div class="scroll-chapter active" id="sc0">
+            <div class="scroll-chapter-bg"></div>
+            <div class="scroll-chapter-img">🏠</div>
+            <div class="sc-num">Capítulo 01 / 10</div>
+            <div class="sc-title">El niño que nadie vio volver</div>
+            <div class="sc-hook">Llegó al Hogar Diamante a los 9 años en situación de calle. Hoy tiene su propio taller.</div>
+            <span class="sc-tag">Impacto social</span>
+          </div>
+          <div class="scroll-chapter" id="sc1">
+            <div class="scroll-chapter-bg"></div>
+            <div class="scroll-chapter-img">🍞</div>
+            <div class="sc-num">Capítulo 03 / 10</div>
+            <div class="sc-title">El panadero</div>
+            <div class="sc-hook">El taller de panadería del Hogar como punto de partida de una vida nueva.</div>
+            <span class="sc-tag">Vocación técnica</span>
+          </div>
+          <div class="scroll-chapter" id="sc2">
+            <div class="scroll-chapter-bg"></div>
+            <div class="scroll-chapter-img">👨‍👧</div>
+            <div class="sc-num">Capítulo 04 / 10</div>
+            <div class="sc-title">La familia reconstruida</div>
+            <div class="sc-hook">Hoy es el padre presente que nunca tuvo. El ciclo se rompe en una generación.</div>
+            <span class="sc-tag">Ruptura del ciclo</span>
+          </div>
+          <div class="scroll-chapter" id="sc3">
+            <div class="scroll-chapter-bg"></div>
+            <div class="scroll-chapter-img">📚</div>
+            <div class="sc-num">Capítulo 08 / 10</div>
+            <div class="sc-title">El educador</div>
+            <div class="sc-hook">Un egresado que hoy trabaja con niños en riesgo. El Hogar multiplicándose a sí mismo.</div>
+            <span class="sc-tag">Efecto multiplicador</span>
+          </div>
+          <div class="scroll-nav">
+            <div class="scroll-dots">
+              <div class="scroll-dot active" onclick="goChapter(0)"></div>
+              <div class="scroll-dot" onclick="goChapter(1)"></div>
+              <div class="scroll-dot" onclick="goChapter(2)"></div>
+              <div class="scroll-dot" onclick="goChapter(3)"></div>
+            </div>
+            <button class="scroll-arrow" onclick="nextChapter()">Siguiente →</button>
+          </div>
+        </div>
+      </div>
+      <div class="pb-info" style="order:2;">
+        <div>
+          <div class="pb-cat">Derechos humanos · Niñez · En desarrollo</div>
+          <h3 class="pb-title">Diez historias. Un mismo <em>hogar.</em></h3>
+          <p class="pb-desc">Reportaje sobre egresados del Hogar Diamante en Amarateca, Honduras. Diez historias de transformación contadas en formato scrollytelling. Reportaje en proceso — pendiente de entrevistas de campo con egresados y directivos.</p>
+          <div class="pb-tags">
+            <span class="pb-tag">10 capítulos</span>
+            <span class="pb-tag">Scrollytelling</span>
+            <span class="pb-tag">En desarrollo</span>
+            <span class="pb-tag">Hogar Diamante · Amarateca</span>
+          </div>
+        </div>
+        <a href="hogar-diamante-portada.html" class="pb-link">Ver avance →</a>
+      </div>
+    </div>
+  </div>
+
+</div>
+</section>
+
+<!-- SOBRE MÍ -->
+<div class="skills-band" id="servicios">
+  <div class="skills-inner">
+    <div>
+      <div style="font-family:var(--mono);font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;color:var(--red);margin-bottom:1rem;">02 // Sobre mí</div>
+      <h2 class="skills-title">Datos,<br>narrativa,<br><em>impacto.</em></h2>
+      <p class="skills-sub">Estudiante de periodismo con enfoque en análisis de datos y narrativa visual. Trabajo con datasets públicos para construir historias verificadas sobre Honduras y Centroamérica.</p>
+    </div>
+    <div class="skills-grid">
+      <div class="skill-cell">
+        <div class="skill-icon">DATA</div>
+        <div class="skill-name">Análisis de datos</div>
+        <div class="skill-desc">Limpieza, exploración y análisis estadístico de datasets públicos con Python y pandas.</div>
+      </div>
+      <div class="skill-cell">
+        <div class="skill-icon">SCROLL</div>
+        <div class="skill-name">Narrativa visual</div>
+        <div class="skill-desc">Reportajes en formato scrollytelling con visualizaciones interactivas y narrativa periodística.</div>
+      </div>
+      <div class="skill-cell">
+        <div class="skill-icon">QUIZ</div>
+        <div class="skill-name">Periodismo interactivo</div>
+        <div class="skill-desc">Quizzes, exploradores de datos y formatos que involucran activamente al lector.</div>
+      </div>
+      <div class="skill-cell">
+        <div class="skill-icon">FIELD</div>
+        <div class="skill-name">Reporteo de campo</div>
+        <div class="skill-desc">Entrevistas con fuentes primarias, documentación y verificación de información.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CONTACTO -->
+<div class="contact-band" id="contacto">
+  <div class="contact-inner">
+    <div>
+      <h2 class="contact-title">¿Tienes un proyecto<br>que necesita una <em>historia?</em></h2>
+      <p class="contact-body">Disponible para colaboraciones con medios, ONGs y organizaciones en Honduras y Centroamérica. Escribime para hablar sobre tu proyecto.</p>
+      <a href="/cdn-cgi/l/email-protection#dabbb4bea8bfbbacbba8bfb6bbe9ea9abdb7bbb3b6f4b9b5b7" class="btn-red">Escribirme ahora</a>
+    </div>
+    <div class="contact-list">
+      <a href="/cdn-cgi/l/email-protection#65040b011700041304170009045655250208040c094b060a08" class="contact-item">
+        <span class="ci-tag">@</span><span class="ci-val"><span class="__cf_email__" data-cfemail="0a6b646e786f6b7c6b786f666b393a4a6d676b636624696567">[email&#160;protected]</span></span>
+      </a>
+      <a href="tel:+50431790011" class="contact-item">
+        <span class="ci-tag">Tel</span><span class="ci-val">+504 3179-0011</span>
+      </a>
+      <a href="https://github.com/AVarelaP" target="_blank" rel="noopener" class="contact-item">
+        <span class="ci-tag">GH</span><span class="ci-val">github.com/AVarelaP</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <span class="f-brand">A. Varela · Analista</span>
+  <ul class="f-links">
+    <li><a href="#proyectos">Proyectos</a></li>
+    <li><a href="#servicios">Sobre mí</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+  </ul>
+  <span class="f-copy">© 2026 · Honduras · Centroamérica</span>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+const heroData = {
+  total:[
+    {l:'Hipertensión',w:100,v:'1.07M',c:'#c8371a'},
+    {l:'Resfriado',w:56,v:'607K',c:'#1a6bc8'},
+    {l:'Diabetes T2',w:30,v:'325K',c:'#b8860b'},
+    {l:'Faringitis',w:14,v:'147K',c:'#1a7a4a'},
+    {l:'Diarrea',w:12,v:'135K',c:'#7a4a9a'}
+  ],
+  fem:[
+    {l:'Hipertensión',w:100,v:'609K',c:'#c8371a'},
+    {l:'Resfriado',w:54,v:'326K',c:'#1a6bc8'},
+    {l:'Diabetes T2',w:29,v:'178K',c:'#b8860b'},
+    {l:'Faringitis',w:14,v:'86K',c:'#1a7a4a'},
+    {l:'Hipotiroid.',w:11,v:'65K',c:'#7a4a9a'}
+  ],
+  masc:[
+    {l:'Hipertensión',w:100,v:'469K',c:'#c8371a'},
+    {l:'Resfriado',w:60,v:'281K',c:'#1a6bc8'},
+    {l:'Diabetes T2',w:31,v:'147K',c:'#b8860b'},
+    {l:'Próstata',w:14,v:'66K',c:'#1a7a4a'},
+    {l:'Faringitis',w:13,v:'61K',c:'#7a4a9a'}
+  ],
+  mayor60:[
+    {l:'Hipertensión',w:100,v:'680K',c:'#c8371a'},
+    {l:'Diabetes T2',w:37,v:'252K',c:'#b8860b'},
+    {l:'Próstata',w:10,v:'66K',c:'#1a6bc8'},
+    {l:'Ins. venosa',w:7,v:'49K',c:'#1a7a4a'},
+    {l:'Artrosis',w:6,v:'44K',c:'#7a4a9a'}
+  ]
+};
+function setFilter(key,btn){
+  document.querySelectorAll('.demo-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  const d=heroData[key];
+  ['b1','b2','b3','b4','b5'].forEach((id,i)=>{
+    const el=document.getElementById(id);
+    el.style.width=d[i].w+'%'; el.style.background=d[i].c;
+    el.querySelector('.mc-val').textContent=d[i].v;
+    el.closest('.mc-row').querySelector('.mc-label').textContent=d[i].l;
+  });
+}
+
+const qs=[
+  {q:'"¿Cuál es la enfermedad más registrada en el IHSS entre 2016 y 2025?"',opts:['A. Diabetes mellitus tipo 2','B. Hipertensión esencial','C. Resfriado común','D. Faringitis aguda'],c:1,fb:'Correcto. La hipertensión acumula 1,077,752 casos — el doble que el segundo diagnóstico. Es la carga más grande del sistema IHSS.'},
+  {q:'"¿En cuánto cayeron los registros de hipertensión entre 2019 y 2020?"',opts:['A. 15%','B. 32%','C. 51%','D. Aumentaron'],c:2,fb:'Una caída del 51%: de 149,451 a 72,577 casos. No porque mejoró la salud — sino porque la pandemia interrumpió la consulta externa. La enfermedad no desapareció; dejó de registrarse.'},
+  {q:'"¿Qué porcentaje de casos concentran Francisco Morazán y Cortés?"',opts:['A. 55%','B. 70%','C. 87%','D. 95%'],c:2,fb:'El 87% de todos los casos en dos departamentos. No es un dato epidemiológico — es un dato de cobertura institucional. El IHSS opera principalmente como un sistema urbano y formal.'}
+];
+let curQ=0,score=0;
+function answer(btn,correct){
+  document.querySelectorAll('.ihss-opt').forEach(b=>b.disabled=true);
+  btn.classList.add(correct?'correct':'wrong');
+  if(!correct) document.querySelectorAll('.ihss-opt')[qs[curQ].c].classList.add('correct');
+  if(correct) score++;
+  const fb=document.getElementById('quizFeedback');
+  fb.textContent=qs[curQ].fb; fb.classList.add('show');
+  const nxt=document.getElementById('quizNext');
+  nxt.textContent=curQ<qs.length-1?'Siguiente →':'Ver resultados →';
+  nxt.classList.add('show');
+  const pips=document.querySelectorAll('.ihss-pip');
+  pips[curQ].classList.remove('active'); pips[curQ].classList.add('done');
+}
+function nextQ(){
+  curQ++;
+  if(curQ>=qs.length){
+    document.querySelector('.ihss-demo').innerHTML=`<div style="text-align:center;padding:1.5rem 0;"><div style="font-family:var(--mono);font-size:.6rem;color:rgba(255,255,255,.4);letter-spacing:.12em;text-transform:uppercase;margin-bottom:.75rem;">Resultado</div><div style="font-family:'Playfair Display',serif;font-size:2.5rem;font-weight:700;color:#fff;margin-bottom:.5rem;">${score} / 3</div><div style="font-family:var(--mono);font-size:.7rem;color:rgba(255,255,255,.45);">${score===3?'Conocés muy bien la realidad sanitaria hondureña.':score===2?'Buen resultado. Los datos del IHSS sorprenden a muchos.':'Los datos revelan patrones que no son evidentes. Leé el reportaje completo.'}</div><a href="reportaje-ihss-honduras.html" style="display:inline-block;margin-top:1rem;font-family:var(--mono);font-size:.65rem;background:#c8371a;color:#fff;padding:.5rem 1.25rem;border-radius:2px;text-decoration:none;letter-spacing:.08em;text-transform:uppercase;">Ver reportaje →</a></div>`;
+    return;
+  }
+  const q=qs[curQ];
+  document.getElementById('quizQ').textContent=q.q;
+  const c=document.getElementById('quizOpts');
+  c.innerHTML='';
+  q.opts.forEach((o,i)=>{
+    const b=document.createElement('button');
+    b.className='ihss-opt'; b.textContent=o;
+    b.onclick=function(){answer(this,i===q.c);};
+    c.appendChild(b);
+  });
+  document.getElementById('quizFeedback').classList.remove('show');
+  document.getElementById('quizNext').classList.remove('show');
+  const pips=document.querySelectorAll('.ihss-pip');
+  if(pips[curQ]) pips[curQ].classList.add('active');
+}
+
+let curChapter=0;
+function goChapter(n){
+  document.getElementById('sc'+curChapter).classList.remove('active');
+  document.querySelectorAll(

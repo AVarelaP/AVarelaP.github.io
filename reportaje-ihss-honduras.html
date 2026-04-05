@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Enfermedades en el IHSS · A. Varela · Periodismo de datos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Syne:wght@300;400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink:#0e0e0e; --paper:#f5f5f5; --paper2:#e0f7fa; --paper3:#b2ebf2;
+  --red:#b83214; --teal:#00818E; --teal2:#00A6CB; --teal-light:#e0f7fa;
+  --muted:#6a6a6a; --border:rgba(14,14,14,.08); --border2:rgba(14,14,14,.15);
+  --mono:'IBM Plex Mono',monospace; --serif:'Playfair Display',serif; --sans:'Syne',sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-weight:300;line-height:1.7;overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.028'/%3E%3C/svg%3E");pointer-events:none;z-index:999;}
+
+/* ── NAV ── */
+nav{position:sticky;top:0;z-index:100;background:rgba(245,245,245,.94);backdrop-filter:blur(12px);border-bottom:1px solid var(--border2);padding:.85rem 3rem;display:flex;align-items:center;justify-content:space-between;}
+.nav-brand{font-family:var(--mono);font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-decoration:none;}
+.nav-brand span{color:var(--red);}
+.nav-progress{flex:1;max-width:200px;margin:0 2rem;height:2px;background:var(--border2);border-radius:1px;overflow:hidden;}
+.nav-progress-fill{height:100%;background:var(--teal);border-radius:1px;width:0%;transition:width .3s;}
+.nav-right{font-family:var(--mono);font-size:.6rem;color:var(--muted);letter-spacing:.08em;}
+
+/* ── COVER ── */
+.cover{min-height:100vh;display:grid;grid-template-rows:1fr auto;border-bottom:1px solid var(--border2);position:relative;overflow:hidden;}
+.cover-main{padding:6rem 3rem 3rem;display:grid;grid-template-columns:1.2fr .8fr;gap:4rem;align-items:end;}
+.cover-meta{font-family:var(--mono);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem;}
+.cover-meta::before{content:'';width:28px;height:1px;background:var(--teal);}
+.cover-kicker{font-family:var(--mono);font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--teal2);margin-bottom:.75rem;}
+.cover-title{font-family:var(--serif);font-size:clamp(2.6rem,5.5vw,5.2rem);font-weight:700;line-height:1.04;letter-spacing:-.03em;margin-bottom:1.5rem;}
+.cover-title em{font-style:italic;color:var(--red);}
+.cover-deck{font-size:1rem;color:var(--muted);line-height:1.8;max-width:480px;margin-bottom:2.5rem;border-left:2px solid var(--border2);padding-left:1.25rem;}
+.cover-byline{display:flex;align-items:center;gap:1rem;padding-top:1.5rem;border-top:1px solid var(--border2);}
+.byline-avatar{width:36px;height:36px;background:var(--teal);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:.65rem;color:var(--paper);font-weight:500;flex-shrink:0;}
+.byline-name{font-family:var(--serif);font-size:.9rem;font-weight:700;color:var(--ink);display:block;letter-spacing:-.01em;}
+.byline-role{font-family:var(--mono);font-size:.58rem;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;}
+.cover-right{display:flex;flex-direction:column;gap:1.5rem;padding-bottom:.5rem;}
+.cover-stat{border:1px solid rgba(0,129,142,.2);border-radius:3px;padding:1.25rem;background:#e0f7fa;}
+.cs-n{font-family:var(--serif);font-size:2.8rem;font-weight:700;line-height:1;letter-spacing:-.03em;color:var(--ink);display:block;}
+.cs-l{font-family:var(--mono);font-size:.6rem;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-top:.3rem;display:block;}
+.cover-bottom{border-top:1px solid var(--border2);padding:1rem 3rem;display:flex;align-items:center;justify-content:space-between;background:#e0f7fa;}
+.cover-source{font-family:var(--mono);font-size:.6rem;color:var(--muted);letter-spacing:.06em;}
+.cover-scroll{font-family:var(--mono);font-size:.6rem;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;display:flex;align-items:center;gap:.6rem;animation:bob 2s ease-in-out infinite;}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(4px)}}
+
+/* ── ARTICLE BODY ── */
+article{max-width:720px;margin:0 auto;padding:4rem 2rem;}
+.section-marker{display:flex;align-items:center;gap:1rem;margin-bottom:1.75rem;margin-top:4rem;}
+.section-marker:first-child{margin-top:0;}
+.sm-num{font-family:var(--mono);font-size:.6rem;color:var(--teal);letter-spacing:.1em;}
+.sm-line{flex:1;height:1px;background:var(--border2);}
+.sm-label{font-family:var(--mono);font-size:.6rem;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;}
+h2.section-title{font-family:var(--serif);font-size:clamp(1.6rem,3vw,2.4rem);font-weight:700;line-height:1.15;letter-spacing:-.025em;margin-bottom:1rem;}
+h2.section-title em{font-style:italic;color:var(--red);}
+p.body-text{font-size:.95rem;color:#3a3530;line-height:1.85;margin-bottom:1.25rem;}
+p.body-text strong{font-weight:500;color:var(--ink);}
+.dropcap::first-letter{font-family:var(--serif);font-size:4.2rem;font-weight:700;float:left;line-height:.8;padding-right:.12em;padding-top:.08em;color:var(--ink);}
+blockquote{border-left:3px solid var(--red);padding:.75rem 1.25rem;margin:2rem 0;background:var(--paper2);border-radius:0 3px 3px 0;}
+blockquote p{font-family:var(--serif);font-size:1.05rem;font-style:italic;color:var(--ink);line-height:1.6;margin:0;}
+blockquote cite{font-family:var(--mono);font-size:.6rem;color:var(--muted);font-style:normal;display:block;margin-top:.5rem;letter-spacing:.06em;}
+
+/* ── DATA MODULES ── */
+.data-module{border:1px solid var(--border2);border-radius:4px;overflow:hidden;margin:2.5rem 0;}
+.dm-header{background:var(--teal);padding:1rem 1.5rem;display:flex;align-items:center;justify-content:space-between;}
+.dm-title{font-family:var(--mono);font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;color:var(--paper);}
+.dm-tag{font-family:var(--mono);font-size:.58rem;letter-spacing:.08em;color:var(--teal2);border:1px solid rgba(0,166,203,.35);padding:.18rem .5rem;border-radius:2px;}
+.dm-body{padding:1.5rem;background:var(--paper);}
+.dm-note{font-family:var(--mono);font-size:.58rem;color:var(--muted);margin-top:1rem;padding-top:.75rem;border-top:1px solid var(--border);letter-spacing:.04em;}
+
+/* Bar chart */
+.bar-chart{display:flex;flex-direction:column;gap:8px;}
+.bc-row{display:flex;align-items:center;gap:10px;}
+.bc-label{font-family:var(--sans);font-size:.75rem;color:var(--muted);width:200px;flex-shrink:0;text-align:right;font-weight:400;}
+.bc-track{flex:1;height:22px;background:var(--paper2);border-radius:2px;overflow:hidden;position:relative;}
+.bc-fill{height:100%;border-radius:2px;display:flex;align-items:center;padding-left:8px;transition:width 1s cubic-bezier(.4,0,.2,1);}
+.bc-val{font-family:var(--mono);font-size:.62rem;color:rgba(255,255,255,.75);white-space:nowrap;font-weight:500;}
+.bc-row.highlight .bc-label{color:var(--ink);font-weight:500;}
+
+/* Trend line */
+.trend-wrap{position:relative;width:100%;height:240px;}
+.trend-wrap canvas{width:100%!important;}
+
+/* Age explorer */
+.age-tabs{display:flex;gap:0;border-bottom:1px solid var(--border2);margin-bottom:1.25rem;}
+.age-tab{font-family:var(--mono);font-size:.62rem;letter-spacing:.07em;padding:.5rem 1rem;background:none;border:none;border-bottom:2px solid transparent;cursor:pointer;color:var(--muted);transition:all .2s;margin-bottom:-1px;}
+.age-tab.active{color:var(--ink);border-bottom-color:var(--teal);}
+.age-chart{display:flex;flex-direction:column;gap:6px;}
+.age-row{display:flex;align-items:center;gap:8px;}
+.age-label{font-family:var(--mono);font-size:.6rem;color:var(--muted);width:44px;text-align:right;flex-shrink:0;}
+.age-track{flex:1;height:20px;background:var(--paper2);border-radius:2px;overflow:hidden;}
+.age-fill{height:100%;border-radius:2px;display:flex;align-items:center;padding-left:6px;transition:width .7s ease;}
+.age-n{font-family:var(--mono);font-size:.58rem;color:rgba(255,255,255,.65);}
+.age-toggle{display:flex;gap:.4rem;margin-top:1rem;}
+.age-btn{font-family:var(--mono);font-size:.6rem;padding:.28rem .7rem;border-radius:2px;border:1px solid var(--border2);background:none;color:var(--muted);cursor:pointer;transition:all .2s;letter-spacing:.05em;}
+.age-btn.on{background:var(--teal);color:var(--paper);border-color:var(--teal);}
+
+/* Quiz */
+.quiz-wrap{background:var(--teal);border-radius:3px;padding:1.5rem;}
+.quiz-q{font-family:var(--serif);font-size:1rem;color:#fff;font-style:italic;margin-bottom:1.25rem;line-height:1.5;}
+.quiz-opts{display:flex;flex-direction:column;gap:.5rem;margin-bottom:.75rem;}
+.quiz-opt{font-family:var(--mono);font-size:.7rem;padding:.65rem 1rem;border:1px solid rgba(255,255,255,.1);background:none;color:rgba(255,255,255,.55);cursor:pointer;border-radius:2px;text-align:left;transition:all .2s;letter-spacing:.04em;}
+.quiz-opt:hover:not(:disabled){background:rgba(255,255,255,.06);color:#fff;}
+.quiz-opt.correct{background:rgba(26,107,58,.25);border-color:#1a6b3a;color:#7de8a8;}
+.quiz-opt.wrong{background:rgba(184,50,20,.15);border-color:var(--red);color:rgba(255,130,110,.9);}
+.quiz-feedback{font-family:var(--mono);font-size:.65rem;color:rgba(255,255,255,.45);line-height:1.6;display:none;padding:.75rem 1rem;background:rgba(255,255,255,.04);border-radius:2px;border-left:2px solid var(--teal2);}
+.quiz-feedback.show{display:block;}
+.quiz-next{font-family:var(--mono);font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;background:var(--teal);color:#fff;border:none;padding:.5rem 1.25rem;border-radius:2px;cursor:pointer;margin-top:.75rem;display:none;}
+.quiz-next.show{display:inline-block;}
+.quiz-score{font-family:var(--mono);font-size:.65rem;color:rgba(255,255,255,.3);margin-top:.5rem;}
+.quiz-pips{display:flex;gap:4px;margin-bottom:1.25rem;}
+.quiz-pip{height:3px;flex:1;background:rgba(255,255,255,.1);border-radius:2px;transition:background .4s;}
+.quiz-pip.done{background:var(--red);}
+.quiz-pip.active{background:rgba(184,50,20,.5);}
+
+/* Sex comparison */
+.sex-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;}
+.sex-card{background:var(--paper2);border-radius:3px;padding:1.25rem;}
+.sex-card-label{font-family:var(--mono);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:.75rem;display:flex;align-items:center;gap:.5rem;}
+.sex-card-label::before{content:'';width:8px;height:8px;border-radius:50%;background:currentColor;}
+.sex-f .sex-card-label{color:var(--teal2);}
+.sex-m .sex-card-label{color:var(--teal);}
+.sex-bars{display:flex;flex-direction:column;gap:6px;}
+.sex-row{display:flex;align-items:center;gap:6px;}
+.sex-rl{font-family:var(--sans);font-size:.68rem;color:var(--muted);width:100px;text-align:right;flex-shrink:0;}
+.sex-track{flex:1;height:14px;background:var(--paper3);border-radius:2px;overflow:hidden;}
+.sex-fill{height:100%;border-radius:2px;}
+.sex-v{font-family:var(--mono);font-size:.58rem;color:var(--muted);min-width:36px;}
+
+/* Geography */
+.dept-bars{display:flex;flex-direction:column;gap:6px;}
+.dept-row{display:flex;align-items:center;gap:8px;}
+.dept-label{font-family:var(--sans);font-size:.72rem;color:var(--muted);width:160px;text-align:right;flex-shrink:0;}
+.dept-track{flex:1;height:18px;background:var(--paper2);border-radius:2px;overflow:hidden;}
+.dept-fill{height:100%;background:var(--teal);border-radius:2px;display:flex;align-items:center;padding-left:6px;}
+.dept-val{font-family:var(--mono);font-size:.6rem;color:rgba(255,255,255,.7);}
+
+/* Callout boxes */
+.callout{border-radius:3px;padding:1.25rem 1.5rem;margin:2rem 0;}
+.callout-red{background:#fdf0ee;border-left:3px solid var(--red);}
+.callout-blue{background:#e0f7fa;border-left:3px solid var(--teal);}
+.callout-amber{background:#faf4e6;border-left:3px solid var(--amber);}
+.callout p{font-size:.85rem;line-height:1.7;margin:0;}
+.callout p strong{font-weight:500;}
+.callout-label{font-family:var(--mono);font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:.5rem;}
+
+/* Conclusion */
+.conclusion{background:var(--teal);color:var(--paper);padding:3rem;margin:3rem 0;border-radius:4px;}
+.conclusion-title{font-family:var(--serif);font-size:1.6rem;font-weight:700;letter-spacing:-.02em;margin-bottom:1.5rem;line-height:1.2;}
+.conclusion-title em{font-style:italic;color:var(--red);}
+.conclusion-items{display:flex;flex-direction:column;gap:1rem;}
+.conclusion-item{display:flex;gap:1rem;align-items:flex-start;}
+.ci-num{font-family:var(--mono);font-size:.62rem;color:var(--red);letter-spacing:.08em;padding-top:2px;min-width:20px;}
+.ci-text{font-size:.85rem;color:rgba(245,242,235,.7);line-height:1.7;}
+.ci-text strong{color:var(--paper);font-weight:500;}
+
+/* Footer */
+.report-footer{border-top:1px solid var(--border2);padding:2rem 3rem;background:#e0f7fa;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;}
+.rf-brand{font-family:var(--serif);font-size:.9rem;color:var(--muted);font-style:italic;}
+.rf-meta{font-family:var(--mono);font-size:.58rem;color:var(--muted);letter-spacing:.06em;}
+.rf-source{font-family:var(--mono);font-size:.58rem;color:var(--muted);text-align:right;line-height:1.6;}
+
+@media(max-width:768px){
+  .cover-main{grid-template-columns:1fr;gap:2rem;}
+  .cover-right{flex-direction:row;flex-wrap:wrap;}
+  .cover-stat{flex:1;min-width:140px;}
+  nav{padding:.85rem 1.5rem;}
+  article{padding:3rem 1.25rem;}
+  .sex-grid{grid-template-columns:1fr;}
+  .bc-label{width:130px;font-size:.68rem;}
+  .cover-bottom{padding:.75rem 1.5rem;}
+  .report-footer{flex-direction:column;}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-brand"><span>A. Varela</span> · Periodismo de datos</a>
+  <div class="nav-progress"><div class="nav-progress-fill" id="progressBar"></div></div>
+  <div class="nav-right">IHSS · 2016–2025</div>
+</nav>
+
+<!-- COVER -->
+<header class="cover">
+  <div class="cover-main">
+    <div>
+      <div class="cover-meta">Análisis · Salud pública · Honduras · 2025</div>
+      <div class="cover-kicker">Instituto Hondureño de Seguridad Social</div>
+      <h1 class="cover-title">Enfermedades en el IHSS:<br>lo que los datos revelan<br>sobre la <em>salud</em><br>de los hondureños</h1>
+      <p class="cover-deck">Nueve años de registros clínicos, 4.4 millones de casos y un patrón que se repite: las enfermedades que más agotan al sistema de salud son, en su mayoría, prevenibles. Este es un análisis de los datos oficiales del IHSS entre 2016 y 2025.</p>
+      <div class="cover-byline">
+        <div class="byline-avatar">AV</div>
+        <div>
+          <span class="byline-name">A. Varela</span>
+          <span class="byline-role">Analista · Periodismo de datos</span>
+        </div>
+      </div>
+    </div>
+    <div class="cover-right">
+      <div class="cover-stat">
+        <span class="cs-n">4.4M</span>
+        <span class="cs-l">Casos totales analizados</span>
+      </div>
+      <div class="cover-stat">
+        <span class="cs-n">9</span>
+        <span class="cs-l">Años de datos (2016–2025)</span>
+      </div>
+      <div class="cover-stat">
+        <span class="cs-n">200+</span>
+        <span class="cs-l">Diagnósticos distintos (CIE-10)</span>
+      </div>
+      <div class="cover-stat">
+        <span class="cs-n">32%</span>
+        <span class="cs-l">Del total: hipertensión + diabetes</span>
+      </div>
+    </div>
+  </div>
+  <div class="cover-bottom">
+    <span class="cover-source">Fuente: IHSS · Sistema de morbilidad ambulatoria · ihss.hn/el-ihss-en-cifras</span>
+    <span class="cover-scroll">↓ desplaza para leer</span>
+  </div>
+</header>
+
+<!-- ARTICLE -->
+<article>
+
+  <!-- SECCIÓN 1: NARRATIVA INTRO -->
+  <div class="section-marker">
+    <span class="sm-num">01</span><div class="sm-line"></div><span class="sm-label">Punto de partida</span>
+  </div>
+  <h2 class="section-title">Una consulta que se repite.<br>Un sistema que <em>no aprende.</em></h2>
+
+  <!-- ADVERTENCIA METODOLÓGICA PROMINENTE -->
+  <div class="callout callout-amber" style="margin-bottom:2rem;">
+    <div class="callout-label">Nota metodológica · Leer antes de continuar</div>
+    <p>Los datos analizados corresponden exclusivamente al <strong>Instituto Hondureño de Seguridad Social (IHSS)</strong>, que cubre a trabajadores del sector formal y sus familias. Honduras registra una tasa de informalidad laboral de alrededor del 82%, según la <a href="https://www.cepal.org/es/temas/empleo" target="_blank" rel="noopener" style="color:var(--teal);text-decoration:underline;">Comisión Económica para América Latina y el Caribe (CEPAL, 2024)</a>, lo que significa que <strong>la mayoría de la población hondureña no está representada en este dataset</strong>. Adicionalmente, la cobertura geográfica está fuertemente concentrada en Francisco Morazán y Cortés. Los hallazgos de este análisis describen la realidad del sistema IHSS — no la totalidad del perfil epidemiológico del país. Las conclusiones deben leerse con esta limitación estructural en mente.</p>
+  </div>
+
+  <p class="body-text dropcap">Los datos del IHSS entre 2016 y 2025 —más de 20,000 combinaciones de diagnóstico, sexo, edad y unidad médica— revelan un patrón preciso y consistente: <strong>las enfermedades que más se atienden en el sistema son, en su mayoría, las que más se podían haber evitado.</strong> La hipertensión esencial, la diabetes mellitus tipo 2 y un conjunto de condiciones crónicas concentran casi un tercio de todos los casos registrados en el período analizado.</p>
+
+  <p class="body-text">Estas no son enfermedades nuevas ni desconocidas. Tienen factores de riesgo documentados, modificables y ampliamente estudiados: sedentarismo, dieta inadecuada, obesidad, tabaquismo y falta de detección oportuna. La Organización Panamericana de la Salud lleva décadas alertando sobre su carga en los sistemas de salud latinoamericanos. Los datos del IHSS confirman que Honduras no es la excepción.</p>
+
+  <blockquote>
+    <p>"Los sistemas de salud de la región siguen respondiendo a la enfermedad en lugar de prevenirla. El costo —humano y financiero— de ese modelo es enorme."</p>
+    <cite>Organización Panamericana de la Salud · <a href="https://www.paho.org/es/documentos/informe-anual-2024-honduras" target="_blank" rel="noopener" style="color:var(--teal);text-decoration:underline;">Informe de cooperación técnica Honduras 2024</a></cite>
+  </blockquote>
+
+  <p class="body-text">Este análisis no evalúa la calidad de la atención médica ni emite juicios sobre los pacientes o los profesionales de salud. Es un retrato estadístico construido desde los registros oficiales del IHSS — con sus alcances y sus límites claramente establecidos — para identificar patrones que el sistema debería estar examinando.</p>
+
+  <!-- QUIZ 1 -->
+  <div class="data-module">
+    <div class="dm-header">
+      <span class="dm-title">Antes de los datos — ¿qué sabés?</span>
+      <span class="dm-tag">Quiz interactivo</span>
+    </div>
+    <div class="dm-body">
+      <div class="quiz-wrap">
+        <div class="quiz-pips" id="qPips">
+          <div class="quiz-pip active"></div>
+          <div class="quiz-pip"></div>
+          <div class="quiz-pip"></div>
+        </div>
+        <div class="quiz-q" id="qQ">"¿Cuál es la enfermedad más registrada en el IHSS en los últimos nueve años?"</div>
+        <div class="quiz-opts" id="qOpts">
+          <button class="quiz-opt" onclick="qa(this,false)">A. Diabetes mellitus tipo 2</button>
+          <button class="quiz-opt" onclick="qa(this,true)">B. Hipertensión esencial</button>
+          <button class="quiz-opt" onclick="qa(this,false)">C. Resfriado común</button>
+          <button class="quiz-opt" onclick="qa(this,false)">D. Infección de vías urinarias</button>
+        </div>
+        <div class="quiz-feedback" id="qFb"></div>
+        <button class="quiz-next" id="qNext" onclick="nextQ()">Siguiente →</button>
+        <div class="quiz-score" id="qScore">Pregunta 1 de 3</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECCIÓN 2: TOP ENFERMEDADES -->
+  <div class="section-marker">
+    <span class="sm-num">02</span><div class="sm-line"></div><span class="sm-label">Hallazgo principal</span>
+  </div>
+  <h2 class="section-title">El top 10: <em>crónicas y prevenibles</em> dominan</h2>
+
+  <p class="body-text">La distribución de los 4.4 millones de casos no es uniforme. Está profundamente concentrada: <strong>los tres primeros diagnósticos concentran el 46% de todos los casos</strong>. El primero es la hipertensión esencial con 1,077,752 registros — más del doble que el segundo. El segundo es el resfriado común, que satura la consulta pediátrica. El tercero es la diabetes tipo 2.</p>
+
+  <p class="body-text">De las diez enfermedades más frecuentes, seis son crónicas y están directamente vinculadas a factores prevenibles: sedentarismo, alimentación, acceso oportuno a atención primaria. Dos son controles de rutina de embarazo y niñez sana. Solo dos son estrictamente infecciosas y agudas.</p>
+
+  <div class="data-module">
+    <div class="dm-header">
+      <span class="dm-title">Top 10 enfermedades · Total de casos 2016–2025</span>
+      <span class="dm-tag">Datos IHSS oficiales</span>
+    </div>
+    <div class="dm-body">
+      <div class="bar-chart" id="top10Chart"></div>
+      <div class="dm-note">Fuente: IHSS · Morbilidad ambulatoria 2016–2025 · 20,056 registros únicos analizados. Los valores representan frecuencias absolutas acumuladas.</div>
+    </div>
+  </div>
+
+  <div class="callout callout-red">
+    <div class="callout-label">Dato clave</div>
+    <p>La hipertensión esencial acumula <strong>1,077,752 casos</strong> en nueve años — un promedio de 119,750 consultas anuales solo por esta enfermedad. Eso equivale a más de 327 consultas diarias en todo el sistema IHSS, todos los días del año, sin excepción.</p>
+  </div>
+
+  <!-- SECCIÓN 3: DISTRIBUCIÓN POR SEXO -->
+  <div class="section-marker">
+    <span class="sm-num">03</span><div class="sm-line"></div><span class="sm-label">Análisis por sexo</span>
+  </div>
+  <h2 class="section-title">Las mujeres acumulan el <em>64% de los casos</em></h2>
+
+  <p class="body-text">La distribución total por sexo muestra una predominancia femenina significativa: 2,823,172 casos en mujeres frente a 1,618,964 en hombres. Esto tiene dos explicaciones que no se excluyen entre sí.</p>
+
+  <p class="body-text">La primera es estructural: las mujeres acceden más a los servicios de salud, particularmente a controles prenatales y ginecológicos, que generan miles de registros de supervisión de embarazo. La segunda es epidemiológica: enfermedades como el hipotiroidismo, la artrosis y la insuficiencia venosa afectan desproporcionadamente a mujeres. <strong>Ambas explicaciones son ciertas al mismo tiempo.</strong></p>
+
+  <div class="data-module">
+    <div class="dm-header">
+      <span class="dm-title">Distribución por sexo · Top 5 diagnósticos</span>
+      <span class="dm-tag">Comparativo F / M</span>
+    </div>
+    <div class="dm-body">
+      <div class="sex-grid" id="sexGrid"></div>
+      <div class="dm-note">Fuente: IHSS · Los datos incluyen todas las unidades médicas reportadas. "Control de embarazo" aparece con registros masculinos por errores de codificación en el sistema.</div>
+    </div>
+  </div>
+
+  <!-- SECCIÓN 4: DISTRIBUCIÓN POR EDAD -->
+  <div class="section-marker">
+    <span class="sm-num">04</span><div class="sm-line"></div><span class="sm-label">Análisis por edad</span>
+  </div>
+  <h2 class="section-title">La edad lo dice todo: enfermedades que <em>debutan a los 50</em></h2>
+
+  <p class="body-text">La distribución por grupos etarios revela uno de los patrones más claros del análisis: <strong>la hipertensión y la diabetes son prácticamente inexistentes antes de los 40 años y explotan a partir de los 55</strong>, alcanzando su pico entre los 65 y 70 años. Esto indica que el sistema está atendiendo enfermedades que se desarrollaron durante décadas sin intervención preventiva.</p>
+
+  <p class="body-text">En contraste, el resfriado común tiene su pico en el grupo de 5 a 9 años, con 156,449 casos — el grupo etario con más registros de ese diagnóstico. Esto satura la consulta pediátrica con una condición que, en la mayoría de los casos, se resuelve con hidratación y reposo sin necesidad de atención especializada.</p>
+
+  <div class="data-module">
+    <div class="dm-header">
+      <span class="dm-title">Distribución por grupo etario · Explorador interactivo</span>
+      <span class="dm-tag">Selecciona enfermedad</span>
+    </div>
+    <div class="dm-body">
+      <div class="age-tabs">
+        <button class="age-tab active" onclick="setAge('hta',this)">Hipertensión</button>
+        <button class="age-tab" onclick="setAge('dm',this)">Diabetes T2</button>
+        <button class="age-tab" onclick="setAge('rinitis',this)">Resfriado</button>
+      </div>
+      <div class="age-chart" id="ageChart"></div>
+      <div class="age-toggle">
+        <button class="age-btn on" id="ageF" onclick="toggleAge('F')">Femenino</button>
+        <button class="age-btn on" id="ageM" onclick="toggleAge('M')">Masculino</button>
+      </div>
+      <div class="dm-note" id="ageNote">La hipertensión alcanza su pico en el grupo 65–69 con 171,004 casos. Menos del 1% de los registros se da antes de los 40 años.</div>
+    </div>
+  </div>
+
+  <div class="callout callout-blue">
+    <div class="callout-label">Contexto epidemiológico</div>
+    <p>La <a href="https://www.paho.org/es/honduras" target="_blank" rel="noopener" style="color:var(--teal2);">OPS estima</a> que <strong>el 80% de los casos de hipertensión y diabetes tipo 2 podrían prevenirse o retrasarse</strong> con intervenciones tempranas en dieta, actividad física y detección oportuna. El patrón etario observado en los datos del IHSS es consistente con la ausencia de estos programas a escala en Honduras.</p>
+  </div>
+
+  <!-- SECCIÓN 5: TENDENCIA TEMPORAL -->
+  <div class="section-marker">
+    <span class="sm-num">05</span><div class="sm-line"></div><span class="sm-label">Tendencia 2016–2025</span>
+  </div>
+  <h2 class="section-title">La pandemia interrumpió la tendencia, <em>pero no la resolvió</em></h2>
+
+  <p class="body-text">Entre 2016 y 2019, los casos registrados de hipertensión y diabetes mostraron una tendencia creciente sostenida. En 2018 se registró el pico histórico de hipertensión con 153,771 casos anuales. En 2020, los registros cayeron en picada.</p>
+
+  <p class="body-text"><strong>Esa caída no refleja mejora en la salud pública.</strong> Refleja el colapso de la consulta externa durante la pandemia de COVID-19. Miles de pacientes con condiciones crónicas dejaron de asistir a sus controles. La consecuencia de esas consultas omitidas — descompensaciones, complicaciones, hospitalizaciones — es difícil de cuantificar con estos datos, pero es real.</p>
+
+  <div class="data-module">
+    <div class="dm-header">
+      <span class="dm-title">Tendencia anual · Hipertensión y Diabetes T2 · 2016–2025</span>
+      <span class="dm-tag">Serie temporal</span>
+    </div>
+    <div class="dm-body">
+      <div class="trend-wrap">
+        <canvas id="trendChart"></canvas>
+      </div>
+      <div class="dm-note">Datos de 2026 excluidos (año incompleto, solo enero). La caída de 2020–2021 corresponde al período de restricciones por COVID-19 en Honduras.</div>
+    </div>
+  </div>
+
+  <div class="callout callout-amber">
+    <div class="callout-label">Anomalía estadística</div>
+    <p>En 2020, los casos de hipertensión registrados cayeron un <strong>51% respecto a 2019</strong> — de 149,451 a 72,577. La diabetes cayó un 58%. No existe evidencia epidemiológica de que la prevalencia haya disminuido ese año. La explicación es operativa: el sistema dejó de registrar porque los pacientes dejaron de llegar.</p>
+  </div>
+
+  <!-- SECCIÓN 6: GEOGRAFÍA -->
+  <div class="section-marker">
+    <span class="sm-num">06</span><div class="sm-line"></div><span class="sm-label">Distribución geográfica</span>
+  </div>
+  <h2 class="section-title">Francisco Morazán y Cortés: <em>el 87% en dos departamentos</em></h2>
+
+  <p class="body-text">La concentración geográfica de los datos es extrema. Francisco Morazán acumula 2,465,538 casos — el 55.5% del total. Cortés suma 1,354,153 casos adicionales. Juntos, representan el 87% de todos los registros del IHSS en el período analizado.</p>
+
+  <p class="body-text">Esto no significa que el resto del país esté más sano. Significa que <strong>la infraestructura del IHSS opera fundamentalmente como un sistema urbano y formal</strong>. Los ocho departamentos restantes en los datos suman apenas 620,000 casos entre todos. Regiones con alta vulnerabilidad social como Gracias a Dios, Intibucá o Lempira están ausentes del dataset — no porque no haya enfermedad, sino porque no hay cobertura registrada del IHSS.</p>
+
+  <div class="callout callout-amber">
+    <div class="callout-label">Advertencia sobre los datos geográficos</div>
+    <p>La concentración del 87% de los casos en dos departamentos <strong>no es un hallazgo epidemiológico — es un hallazgo de cobertura institucional.</strong> Interpretar estos datos como representativos del perfil de salud nacional sería un error metodológico grave. Honduras tiene 18 departamentos; este dataset refleja de forma significativa solo dos. Cualquier política pública o conclusión que se derive de estos datos debe considerar explícitamente esta brecha. Fuente de referencia: <a href="https://portalunico.iaip.gob.hn/356/" target="_blank" rel="noopener" style="color:var(--teal);">Portal Único de Transparencia · IHSS</a>.</p>
+  </div>
+
+  <div class="data-module">
+    <div class="dm-header">
+      <span class="dm-title">Casos por departamento · Total 2016–2025</span>
+      <span class="dm-tag">Distribución geográfica</span>
+    </div>
+    <div class="dm-body">
+      <div class="dept-bars" id="deptChart"></div>
+      <div class="dm-note">Solo se muestran los departamentos con registros en el dataset. La ausencia de varios departamentos refleja la cobertura geográfica real del IHSS, no ausencia de enfermedad.</div>
+    </div>
+  </div>
+
+  <!-- CONCLUSIÓN -->
+  <div class="section-marker">
+    <span class="sm-num">07</span><div class="sm-line"></div><span class="sm-label">Conclusiones</span>
+  </div>
+  <h2 class="section-title">Lo que los datos dicen —<br>y lo que <em>todavía no pueden decir</em></h2>
+
+  <p class="body-text">El análisis de los registros del IHSS confirma la hipótesis de partida: las enfermedades más frecuentes están asociadas a factores prevenibles y a falta de atención oportuna. Pero los datos también tienen límites que es necesario reconocer.</p>
+
+  <p class="body-text">El dataset cubre solo a la población asegurada del IHSS — trabajadores formales y sus familias. Honduras registra una tasa de informalidad laboral de alrededor del 82% según la <a href="https://www.cepal.org/es/temas/empleo" target="_blank" rel="noopener" style="color:var(--teal);text-decoration:underline;">CEPAL (2024)</a>. <strong>La mayoría de los hondureños no aparece en estos datos.</strong> Lo que vemos es probablemente la punta del iceberg.</p>
+
+  <div class="conclusion">
+    <div class="conclusion-title">Cuatro hallazgos que el sistema<br>debería tomar <em>en serio</em></div>
+    <div class="conclusion-items">
+      <div class="conclusion-item">
+        <span class="ci-num">01</span>
+        <span class="ci-text"><strong>La hipertensión y la diabetes concentran el 32% de todos los casos.</strong> Ambas son prevenibles con intervenciones tempranas en dieta, actividad física y detección. El sistema las atiende pero no las previene a escala.</span>
+      </div>
+      <div class="conclusion-item">
+        <span class="ci-num">02</span>
+        <span class="ci-text"><strong>El pico etario en 65–69 años indica décadas de factores de riesgo sin intervención.</strong> Un paciente que llega con hipertensión a los 67 probablemente tenía los factores desde los 40. La ventana de prevención se cerró hace tiempo.</span>
+      </div>
+      <div class="conclusion-item">
+        <span class="ci-num">03</span>
+        <span class="ci-text"><strong>La pandemia creó una brecha de atención invisible en las estadísticas.</strong> La caída del 51% en registros de 2020 no es una mejora — es una deuda sanitaria que se cobra en complicaciones posteriores.</span>
+      </div>
+      <div class="conclusion-item">
+        <span class="ci-num">04</span>
+        <span class="ci-text"><strong>El 87% de los casos en dos departamentos no es un dato de salud — es un dato de cobertura.</strong> El IHSS atiende a Honduras urbana y formal. El resto del país queda fuera del registro y, con alta probabilidad, de la atención.</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout callout-red" style="margin-top:2rem;">
+    <div class="callout-label">Metodología y fuentes</div>
+    <p>Análisis basado en el dataset de morbilidad ambulatoria del IHSS (2016–2025), 20,056 registros únicos. Procesado con Python/pandas. Los datos de enero 2026 fueron excluidos por ser un año incompleto. Las visualizaciones representan frecuencias absolutas acumuladas por diagnóstico CIE-10, sexo y grupo etario. <strong>Fuentes primarias:</strong> <a href="https://www.ihss.hn/el-ihss-en-cifras/" target="_blank" rel="noopener" style="color:var(--teal);">IHSS · Sistema de morbilidad ambulatoria</a> · <a href="https://portalunico.iaip.gob.hn/356/" target="_blank" rel="noopener" style="color:var(--teal);">Portal Único de Transparencia Honduras</a>. <strong>Fuentes secundarias:</strong> <a href="https://www.paho.org/es/documentos/informe-anual-2024-honduras" target="_blank" rel="noopener" style="color:var(--teal);">OPS/OMS · Informe Honduras 2024</a><br>
+    Fuente de contexto: <a href="https://www.cepal.org/es/temas/empleo" target="_blank" rel="noopener" style="color:var(--teal);">CEPAL · Informalidad laboral Honduras 82% · 2024</a> · <a href="https://www.paho.org/es/honduras" target="_blank" rel="noopener" style="color:var(--red);">OPS · Página Honduras</a>. El dataset completo y el código de análisis están disponibles en el repositorio de GitHub.</p>
+  </div>
+
+  <!-- HISTORIAS PENDIENTES -->
+  <div class="section-marker" style="margin-top:4rem;">
+    <span class="sm-num">08</span><div class="sm-line"></div><span class="sm-label">Próximas investigaciones</span>
+  </div>
+  <h2 class="section-title">Más historias en estos <em>mismos datos</em></h2>
+  <p class="body-text">Este análisis es el punto de partida. Los mismos datos del IHSS permiten profundizar en al menos cinco investigaciones independientes, cada una con su propio ángulo periodístico.</p>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1.5rem 0;">
+    <div style="border:1px solid var(--border2);border-radius:3px;padding:1.25rem;">
+      <div style="font-family:var(--mono);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);margin-bottom:.5rem;">Investigación 02</div>
+      <div style="font-family:var(--serif);font-size:1rem;font-weight:700;margin-bottom:.4rem;line-height:1.3;">La deuda sanitaria de la pandemia</div>
+      <div style="font-size:.78rem;color:var(--muted);line-height:1.6;">¿Cuántos pacientes crónicos dejaron de ser atendidos entre 2020 y 2021? Análisis de la brecha de consultas y su probable impacto en complicaciones posteriores.</div>
+    </div>
+    <div style="border:1px solid var(--border2);border-radius:3px;padding:1.25rem;">
+      <div style="font-family:var(--mono);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:var(--teal2);margin-bottom:.5rem;">Investigación 03</div>
+      <div style="font-family:var(--serif);font-size:1rem;font-weight:700;margin-bottom:.4rem;line-height:1.3;">El mapa de la desigualdad sanitaria</div>
+      <div style="font-size:.78rem;color:var(--muted);line-height:1.6;">Correlación entre cobertura del IHSS por municipio y niveles de pobreza. ¿Quiénes quedan fuera del sistema formal de salud?</div>
+    </div>
+    <div style="border:1px solid var(--border2);border-radius:3px;padding:1.25rem;">
+      <div style="font-family:var(--mono);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);margin-bottom:.5rem;">Investigación 04</div>
+      <div style="font-family:var(--serif);font-size:1rem;font-weight:700;margin-bottom:.4rem;line-height:1.3;">Hipertensión: una epidemia silenciosa en datos</div>
+      <div style="font-size:.78rem;color:var(--muted);line-height:1.6;">Análisis específico de la hipertensión: evolución por unidad médica, distribución territorial y comparación con promedios regionales de la OPS.</div>
+    </div>
+    <div style="border:1px solid var(--border2);border-radius:3px;padding:1.25rem;">
+      <div style="font-family:var(--mono);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:var(--teal2);margin-bottom:.5rem;">Investigación 05</div>
+      <div style="font-family:var(--serif);font-size:1rem;font-weight:700;margin-bottom:.4rem;line-height:1.3;">La consulta pediátrica saturada</div>
+      <div style="font-size:.78rem;color:var(--muted);line-height:1.6;">El resfriado común como síntoma del sistema: 607,000 consultas por una condición autolimitada. ¿Qué dice eso sobre el acceso a atención primaria en Honduras?</div>
+    </div>
+  </div>
+  <p class="body-text" style="font-size:.82rem;color:var(--muted);">Cada una de estas investigaciones requiere reporteo adicional, solicitudes de acceso a información pública y, en algunos casos, entrevistas con fuentes especializadas. Si querés colaborar o tenés datos relevantes, escribí a través del portafolio.</p>
+
+</article>
+
+<!-- FOOTER -->
+<footer class="report-footer">
+  <div class="rf-brand">A. Varela · Analista</div>
+  <div class="rf-meta">Publicado en 2026 · Honduras</div>
+  <div class="rf-source">
+    Fuente primaria: <a href="https://www.ihss.hn/el-ihss-en-cifras/" target="_blank" rel="noopener" style="color:var(--teal);">IHSS · ihss.hn/el-ihss-en-cifras</a><br>
+    Fuente secundaria: <a href="https://www.paho.org/es/documentos/informe-anual-2024-honduras" target="_blank" rel="noopener" style="color:var(--teal);">OPS/OMS · Informe Honduras 2024</a><br>
+    Fuente de contexto: <a href="https://www.cepal.org/es/temas/empleo" target="_blank" rel="noopener" style="color:var(--teal);">CEPAL · Informalidad laboral Honduras 82% · 2024</a>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+// ── PROGRESS BAR ──
+window.addEventListener('scroll', () => {
+  const h = document.documentElement;
+  const pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
+  document.getElementById('progressBar').style.width = pct + '%';
+});
+
+// ── TOP 10 BAR CHART ──
+const top10 = [
+  { l:'Hipertensión esencial', v:1077752, c:'#b83214', pct:100 },
+  { l:'Resfriado común', v:607384, c:'#00A6CB', pct:56 },
+  { l:'Control embarazo normal', v:332152, c:'#00818E', pct:31 },
+  { l:'Diabetes mellitus T2', v:325060, c:'#b83214', pct:30 },
+  { l:'Faringitis aguda', v:146702, c:'#00A6CB', pct:14 },
+  { l:'Diarrea/gastroenteritis', v:134833, c:'#00818E', pct:13 },
+  { l:'Caries dental', v:121258, c:'#8a5f00', pct:11 },
+  { l:'Hipotiroidismo', v:108895, c:'#b83214', pct:10 },
+  { l:'Lumbalgia no especif.', v:96821, c:'#8a5f00', pct:9 },
+  { l:'Control niño sano', v:90299, c:'#00818E', pct:8 }
+];
+const bc = document.getElementById('top10Chart');
+top10.forEach((d, i) => {
+  bc.innerHTML += `<div class="bc-row${i===0||i===3?' highlight':''}">
+    <span class="bc-label">${d.l}</span>
+    <div class="bc-track">
+      <div class="bc-fill" style="width:0%;background:${d.c};" data-w="${d.pct}">
+        <span class="bc-val">${d.v.toLocaleString()}</span>
+      </div>
+    </div>
+  </div>`;
+});
+setTimeout(() => {
+  document.querySelectorAll('.bc-fill').forEach(el => {
+    el.style.width = el.dataset.w + '%';
+  });
+}, 300);
+
+// ── SEX COMPARISON ──
+const sexData = [
+  { l:'Hipertensión', f:609072, m:468680 },
+  { l:'Resfriado', f:326103, m:281281 },
+  { l:'Diabetes T2', f:177709, m:147351 },
+  { l:'Faringitis', f:85563, m:61139 },
+  { l:'Hipotiroidismo', f:97000, m:11895 }
+];
+const maxF = Math.max(...sexData.map(d=>d.f));
+const maxM = Math.max(...sexData.map(d=>d.m));
+const sg = document.getElementById('sexGrid');
+sg.innerHTML = `
+<div class="sex-card sex-f">
+  <div class="sex-card-label">Femenino · 2,823,172 casos</div>
+  <div class="sex-bars">${sexData.map(d=>`
+    <div class="sex-row">
+      <span class="sex-rl">${d.l}</span>
+      <div class="sex-track"><div class="sex-fill" style="width:${(d.f/maxF*100).toFixed(0)}%;background:#00A6CB;"></div></div>
+      <span class="sex-v">${(d.f/1000).toFixed(0)}K</span>
+    </div>`).join('')}
+  </div>
+</div>
+<div class="sex-card sex-m">
+  <div class="sex-card-label">Masculino · 1,618,964 casos</div>
+  <div class="sex-bars">${sexData.map(d=>`
+    <div class="sex-row">
+      <span class="sex-rl">${d.l}</span>
+      <div class="sex-track"><div class="sex-fill" style="width:${(d.m/maxM*100).toFixed(0)}%;background:#00818E;"></div></div>
+      <span class="sex-v">${(d.m/1000).toFixed(0)}K</span>
+    </div>`).join('')}
+  </div>
+</div>`;
+
+// ── AGE EXPLORER ──
+const ageData = {
+  hta: { ages:['35–39','40–44','45–49','50–54','55–59','60–64','65–69','70–74','75–79','80+'], F:[6100,24000,37580,50057,62743,70824,85502,82807,55674,63497], M:[6119,24028,37580,50057,62744,70824,85502,82808,55674,63496], note:'La hipertensión alcanza su pico en el grupo 65–69 con 171,004 casos. Menos del 1% se da antes de los 40 años.' },
+  dm:  { ages:['35–39','40–44','45–49','50–54','55–59','60–64','65–69','70–74','75–79','80+'], F:[210,3354,10687,17180,24975,25580,28347,24408,14181,13608], M:[210,3353,10687,17181,24974,25579,28348,24409,14181,13608], note:'La diabetes tipo 2 sigue el mismo patrón etario que la hipertensión. El 85% de los casos ocurre después de los 50 años.' },
+  rinitis: { ages:['0–4','5–9','10–14','15–19','20–24','25–29','30–34','35–39','40–44','45+'], F:[52624,78224,32300,5653,19036,28997,27770,21660,15854,19885], M:[52625,78225,32301,5654,19037,28997,27770,21660,15855,19890], note:'El resfriado concentra el 43% de sus casos en niños menores de 10 años. El pico 5–9 con 156,449 casos satura la consulta pediátrica.' }
+};
+const ageColors = { hta:'#b83214', dm:'#8a5f00', rinitis:'#1a5ea8' };
+let ageDis='hta', ageF=true, ageM=true;
+function renderAge() {
+  const d=ageData[ageDis]; const c=ageColors[ageDis];
+  const vals=d.ages.map((_,i)=>(ageF?d.F[i]:0)+(ageM?d.M[i]:0));
+  const mx=Math.max(...vals);
+  document.getElementById('ageChart').innerHTML=d.ages.map((a,i)=>{
+    const pct=mx>0?(vals[i]/mx*100).toFixed(1):0;
+    const lbl=vals[i]>=1000?Math.round(vals[i]/1000)+'K':vals[i];
+    return `<div class="age-row"><span class="age-label">${a}</span><div class="age-track"><div class="age-fill" style="width:${pct}%;background:${c};"><span class="age-n">${lbl}</span></div></div></div>`;
+  }).join('');
+  document.getElementById('ageNote').textContent=d.note;
+}
+function setAge(d,btn) { ageDis=d; document.querySelectorAll('.age-tab').forEach(t=>t.classList.remove('active')); btn.classList.add('active'); renderAge(); }
+function toggleAge(s) { if(s==='F'){ageF=!ageF;document.getElementById('ageF').classList.toggle('on',ageF);}else{ageM=!ageM;document.getElementById('ageM').classList.toggle('on',ageM);} renderAge(); }
+renderAge();
+
+// ── TREND CHART ──
+const years=['2016','2017','2018','2019','2020','2021','2022','2023','2024','2025'];
+new Chart(document.getElementById('trendChart'),{
+  type:'line',
+  data:{
+    labels:years,
+    datasets:[
+      {label:'Hipertensión',data:[110568,116588,153771,149451,72577,76404,95692,101507,95506,97597],borderColor:'#b83214',backgroundColor:'rgba(184,50,20,.08)',tension:.4,fill:true,pointRadius:4,pointBackgroundColor:'#b83214'},
+      {label:'Diabetes T2',data:[22934,33708,57037,56463,23663,20600,26629,26890,27852,27019],borderColor:'#00A6CB',backgroundColor:'rgba(0,166,203,.08)',tension:.4,fill:true,pointRadius:4,pointBackgroundColor:'#8a5f00'}
+    ]
+  },
+  options:{
+    responsive:true,maintainAspectRatio:false,
+    plugins:{
+      legend:{display:false},
+      tooltip:{mode:'index',intersect:false,callbacks:{label:ctx=>`${ctx.dataset.label}: ${ctx.raw.toLocaleString()}`}}
+    },
+    scales:{
+      x:{ticks:{color:'#6a6254',font:{size:11,family:"'IBM Plex Mono'"}},grid:{display:false}},
+      y:{ticks:{color:'#6a6254',font:{size:11,family:"'IBM Plex Mono'"},callback:v=>v>=1000?Math.round(v/1000)+'K':v},grid:{color:'rgba(14,14,14,.06)'}}
+    }
+  }
+});
+
+// ── DEPT CHART ──
+const depts=[
+  {l:'Francisco Morazán',v:2465538,pct:100},
+  {l:'Cortés',v:1354153,pct:55},
+  {l:'Yoro',v:274662,pct:11},
+  {l:'Atlántida',v:98715,pct:4},
+  {l:'El Paraíso',v:61646,pct:2.5},
+  {l:'Santa Bárbara',v:61414,pct:2.5},
+  {l:'Colón',v:61405,pct:2.5},
+  {l:'Olancho',v:56678,pct:2.3}
+];
+const dc=document.getElementById('deptChart');
+depts.forEach(d=>{
+  dc.innerHTML+=`<div class="dept-row"><span class="dept-label">${d.l}</span><div class="dept-track"><div class="dept-fill" style="width:${d.pct}%;"><span class="dept-val">${d.v.toLocaleString()}</span></div></div></div>`;
+});
+
+// ── QUIZ ──
+const qs=[
+  {q:'"¿Cuál es la enfermedad más registrada en el IHSS en los últimos nueve años?"',opts:['A. Diabetes mellitus tipo 2','B. Hipertensión esencial','C. Resfriado común','D. Infección de vías urinarias'],c:1,fb:'Correcto. La hipertensión esencial acumula 1,077,752 casos — el doble que el segundo diagnóstico. Es la carga más grande del sistema IHSS.'},
+  {q:'"¿En cuánto cayeron los registros de hipertensión entre 2019 y 2020?"',opts:['A. Cayeron un 15%','B. Cayeron un 32%','C. Cayeron un 51%','D. Aumentaron'],c:2,fb:'Una caída del 51%: de 149,451 a 72,577 casos. No porque mejoró la salud — sino porque la pandemia cerró las consultas. La enfermedad no desapareció; dejó de registrarse.'},
+  {q:'"¿Qué porcentaje de los casos totales concentran Francisco Morazán y Cortés?"',opts:['A. 55%','B. 70%','C. 87%','D. 95%'],c:2,fb:'El 87% de todos los casos en dos departamentos. No es un dato de salud: es un dato de cobertura. El IHSS opera como un sistema fundamentalmente urbano y formal.'}
+];
+let curQ=0,score=0;
+function qa(btn,correct) {
+  document.querySelectorAll('.quiz-opt').forEach(b=>b.disabled=true);
+  btn.classList.add(correct?'correct':'wrong');
+  if(!correct) document.querySelectorAll('.quiz-opt')[qs[curQ].c].classList.add('correct');
+  if(correct) score++;
+  const fb=document.getElementById('qFb');
+  fb.textContent=qs[curQ].fb; fb.classList.add('show');
+  const nxt=document.getElementById('qNext');
+  nxt.textContent=curQ<qs.length-1?'Siguiente pregunta →':'Ver resultados →';
+  nxt.classList.add('show');
+  const pips=document.querySelectorAll('.quiz-pip');
+  pips[curQ].classList.remove('active'); pips[curQ].classList.add('done');
+}
+function nextQ() {
+  curQ++;
+  if(curQ>=qs.length){
+    document.querySelector('.quiz-wrap').innerHTML=`<div style="text-align:center;padding:1rem 0;"><div style="font-family:var(--mono);font-size:.6rem;color:rgba(255,255,255,.4);letter-spacing:.12em;text-transform:uppercase;margin-bottom:.75rem;">Resultado</div><div style="font-family:var(--serif);font-size:2.5rem;font-weight:700;color:#fff;margin-bottom:.5rem;">${score} / 3</div><div style="font-family:var(--mono);font-size:.7rem;color:rgba(255,255,255,.45);">${score===3?'Conocés muy bien la realidad sanitaria hondureña.':score===2?'Buen resultado. Los datos del IHSS sorprenden a muchos.':'Los datos del IHSS revelan patrones que no son evidentes. Seguí leyendo.'}</div></div>`;
+    return;
+  }
+  const q=qs[curQ];
+  document.getElementById('qQ').textContent=q.q;
+  const c=document.getElementById('qOpts');
+  c.innerHTML='';
+  q.opts.forEach((o,i)=>{
+    const b=document.createElement('button');
+    b.className='quiz-opt'; b.textContent=o;
+    b.onclick=function(){qa(this,i===q.c);};
+    c.appendChild(b);
+  });
+  document.getElementById('qFb').classList.remove('show');
+  document.getElementById('qNext').classList.remove('show');
+  document.getElementById('qScore').textContent=`Pregunta ${curQ+1} de 3`;
+  const pips=document.querySelectorAll('.quiz-pip');
+  if(pips[curQ]) pips[curQ].classList.add('active');
+}
+</script>
+</body>
+</html>
