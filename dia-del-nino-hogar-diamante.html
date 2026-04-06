@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Poder jugar, trabajar y dormir · Hogar Diamante · A. Varela</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Syne:wght@300;400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink:#0e0e0e; --paper:#f5f5f5; --paper2:#e0f7fa; --paper3:#b2ebf2;
+  --red:#b83214; --teal:#00818E; --teal2:#00A6CB; --teal-light:#e0f7fa;
+  --muted:#6a6a6a; --border:rgba(14,14,14,.08); --border2:rgba(14,14,14,.15);
+  --mono:'IBM Plex Mono',monospace; --serif:'Playfair Display',serif; --sans:'Syne',sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-weight:300;line-height:1.7;overflow-x:hidden;}
+
+/* TICKER */
+.ticker{background:var(--ink);color:var(--paper);font-family:var(--mono);font-size:.62rem;letter-spacing:.08em;padding:.4rem 0;overflow:hidden;white-space:nowrap;}
+.ticker-inner{display:inline-flex;gap:2.5rem;animation:tick 32s linear infinite;}
+.ticker-dot{width:5px;height:5px;border-radius:50%;background:var(--red);display:inline-block;margin-right:.5rem;}
+@keyframes tick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* NAV */
+nav{background:rgba(245,245,245,.94);backdrop-filter:blur(12px);border-bottom:1px solid var(--border2);display:flex;align-items:center;justify-content:space-between;padding:1rem 3rem;position:sticky;top:0;z-index:100;}
+.nav-brand{text-decoration:none;color:var(--ink);display:flex;flex-direction:column;gap:1px;}
+.nav-name{font-family:var(--serif);font-size:1rem;font-weight:700;letter-spacing:-.02em;}
+.nav-role{font-family:var(--mono);font-size:.55rem;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;}
+.nav-progress{flex:1;max-width:180px;margin:0 2rem;height:2px;background:var(--border2);border-radius:1px;overflow:hidden;}
+.nav-progress-fill{height:100%;background:var(--teal);border-radius:1px;width:0%;transition:width .2s;}
+.nav-right{font-family:var(--mono);font-size:.6rem;color:var(--muted);letter-spacing:.08em;}
+
+/* COVER */
+.cover{min-height:100vh;display:grid;grid-template-rows:1fr auto;border-bottom:1px solid var(--border2);position:relative;overflow:hidden;background:var(--ink);}
+.cover-bg{position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 39px,rgba(255,255,255,.02) 39px,rgba(255,255,255,.02) 40px),repeating-linear-gradient(90deg,transparent,transparent 39px,rgba(255,255,255,.02) 39px,rgba(255,255,255,.02) 40px);}
+.cover-main{padding:7rem 3rem 3rem;max-width:860px;margin:0 auto;width:100%;position:relative;z-index:1;}
+.cover-eyebrow{font-family:var(--mono);font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:var(--teal2);margin-bottom:1.5rem;display:flex;align-items:center;gap:.75rem;animation:fu .7s ease both;}
+.cover-eyebrow::before{content:'';width:20px;height:1px;background:var(--teal2);}
+.cover-title{font-family:var(--serif);font-size:clamp(2.8rem,6vw,5.5rem);font-weight:700;line-height:1.04;letter-spacing:-.03em;color:#fff;margin-bottom:1.25rem;animation:fu .8s .1s ease both;}
+.cover-title em{font-style:italic;color:var(--red);}
+.cover-sub{font-size:1.05rem;color:rgba(255,255,255,.55);max-width:560px;line-height:1.8;margin-bottom:2.5rem;border-left:2px solid rgba(0,166,203,.4);padding-left:1.25rem;animation:fu .9s .2s ease both;}
+.cover-byline{display:flex;align-items:center;gap:1rem;padding-top:1.5rem;border-top:1px solid rgba(255,255,255,.08);animation:fu 1s .3s ease both;}
+.byline-av{width:36px;height:36px;background:var(--teal);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:.62rem;color:#fff;font-weight:500;flex-shrink:0;}
+.byline-name{font-family:var(--serif);font-size:.9rem;font-weight:700;color:#fff;display:block;}
+.byline-role{font-family:var(--mono);font-size:.55rem;color:rgba(255,255,255,.4);letter-spacing:.1em;text-transform:uppercase;}
+.cover-bottom{border-top:1px solid rgba(255,255,255,.06);padding:1rem 3rem;display:flex;align-items:center;justify-content:space-between;position:relative;z-index:1;}
+.cover-meta{font-family:var(--mono);font-size:.6rem;color:rgba(255,255,255,.3);letter-spacing:.06em;}
+.cover-scroll{font-family:var(--mono);font-size:.6rem;color:rgba(255,255,255,.3);letter-spacing:.12em;text-transform:uppercase;display:flex;align-items:center;gap:.5rem;animation:bob 2s ease-in-out infinite;}
+.cover-scroll::before{content:'';width:16px;height:1px;background:var(--teal2);}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(4px)}}
+@keyframes fu{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+
+/* ARTICLE */
+article{max-width:720px;margin:0 auto;padding:4rem 2rem;}
+.section-marker{display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem;margin-top:3.5rem;}
+.section-marker:first-child{margin-top:0;}
+.sm-num{font-family:var(--mono);font-size:.6rem;color:var(--teal);letter-spacing:.1em;}
+.sm-line{flex:1;height:1px;background:var(--border2);}
+.sm-label{font-family:var(--mono);font-size:.6rem;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;}
+h2.section-title{font-family:var(--serif);font-size:clamp(1.6rem,3vw,2.2rem);font-weight:700;line-height:1.15;letter-spacing:-.02em;margin-bottom:1rem;}
+h2.section-title em{font-style:italic;color:var(--red);}
+p.body-text{font-size:.95rem;color:#3a3530;line-height:1.9;margin-bottom:1.25rem;}
+p.body-text strong{font-weight:500;color:var(--ink);}
+.dropcap::first-letter{font-family:var(--serif);font-size:4rem;font-weight:700;float:left;line-height:.85;padding-right:.12em;padding-top:.06em;color:var(--teal);}
+
+/* BLOCKQUOTE */
+blockquote{border-left:3px solid var(--teal);padding:.85rem 1.25rem;margin:2rem 0;background:var(--teal-light);border-radius:0 4px 4px 0;}
+blockquote p{font-family:var(--serif);font-size:1.05rem;font-style:italic;color:var(--ink);line-height:1.6;margin:0;}
+blockquote cite{font-family:var(--mono);font-size:.62rem;color:var(--teal);font-style:normal;display:block;margin-top:.5rem;letter-spacing:.06em;}
+
+/* PULL QUOTE */
+.pull-quote{text-align:center;padding:2.5rem 1.5rem;margin:2.5rem 0;border-top:1px solid var(--border2);border-bottom:1px solid var(--border2);}
+.pull-quote p{font-family:var(--serif);font-size:clamp(1.2rem,2.5vw,1.8rem);font-style:italic;color:var(--ink);line-height:1.4;margin-bottom:.75rem;}
+.pull-quote cite{font-family:var(--mono);font-size:.65rem;color:var(--teal);letter-spacing:.1em;text-transform:uppercase;}
+
+/* STEPPER — tarjetas revelables */
+.stepper-wrap{margin:2.5rem 0;}
+.stepper-label{font-family:var(--mono);font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;color:var(--teal);margin-bottom:1rem;display:flex;align-items:center;gap:.5rem;}
+.stepper-label::before{content:'';width:12px;height:1px;background:var(--teal);}
+.stepper-progress{display:flex;gap:4px;margin-bottom:1.25rem;}
+.sp-pip{height:3px;flex:1;background:var(--border2);border-radius:2px;transition:background .4s;}
+.sp-pip.done{background:var(--teal);}
+.sp-pip.active{background:var(--teal2);}
+.stepper-stage{display:none;}
+.stepper-stage.active{display:block;}
+.stage-label{font-family:var(--mono);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--teal2);margin-bottom:.5rem;}
+.stage-text{font-size:.92rem;color:#3a3530;line-height:1.85;}
+.stage-text strong{color:var(--ink);font-weight:500;}
+.stepper-nav{display:flex;justify-content:space-between;align-items:center;margin-top:1.25rem;padding-top:1rem;border-top:1px solid var(--border2);}
+.st-btn{font-family:var(--mono);font-size:.65rem;letter-spacing:.08em;text-transform:uppercase;padding:.5rem 1.25rem;border-radius:2px;border:1px solid var(--border2);background:transparent;color:var(--muted);cursor:pointer;transition:all .2s;}
+.st-btn:hover{background:var(--paper2);color:var(--ink);}
+.st-btn.primary{background:var(--teal);border-color:var(--teal);color:#fff;}
+.st-step{font-family:var(--mono);font-size:.62rem;color:var(--muted);}
+
+/* FLIP CARDS */
+.flip-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin:2rem 0;}
+.flip-card{height:180px;perspective:1000px;cursor:pointer;}
+.flip-inner{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform .55s cubic-bezier(.4,0,.2,1);}
+.flip-card.flipped .flip-inner{transform:rotateY(180deg);}
+.flip-front,.flip-back{position:absolute;inset:0;backface-visibility:hidden;border-radius:4px;padding:1.25rem;display:flex;flex-direction:column;justify-content:flex-end;}
+.flip-front{background:var(--ink);border:1px solid rgba(255,255,255,.08);}
+.flip-back{background:var(--teal);transform:rotateY(180deg);}
+.flip-num{font-family:var(--mono);font-size:.58rem;color:rgba(255,255,255,.3);letter-spacing:.1em;margin-bottom:.5rem;}
+.flip-name{font-family:var(--serif);font-size:1.1rem;font-weight:700;color:#fff;line-height:1.2;margin-bottom:.3rem;}
+.flip-before{font-size:.75rem;color:rgba(255,255,255,.4);line-height:1.4;}
+.flip-after-label{font-family:var(--mono);font-size:.55rem;color:rgba(255,255,255,.6);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.4rem;}
+.flip-after{font-family:var(--serif);font-size:1rem;font-weight:700;color:#fff;line-height:1.3;margin-bottom:.3rem;}
+.flip-after-sub{font-size:.75rem;color:rgba(255,255,255,.7);line-height:1.4;}
+.flip-hint{font-family:var(--mono);font-size:.58rem;color:var(--teal2);text-align:center;margin-bottom:1rem;letter-spacing:.06em;}
+
+/* COUNTER */
+.counter-band{background:var(--teal);color:#fff;padding:3rem 2rem;margin:2.5rem 0;border-radius:4px;}
+.counter-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;max-width:680px;margin:0 auto;}
+.counter-item{text-align:center;}
+.counter-n{font-family:var(--serif);font-size:2.8rem;font-weight:700;line-height:1;display:block;color:#fff;}
+.counter-l{font-family:var(--mono);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-top:.3rem;display:block;}
+
+/* CALCULATOR */
+.calc-wrap{background:var(--ink);border-radius:4px;padding:2rem;margin:2.5rem 0;color:#fff;}
+.calc-title{font-family:var(--serif);font-size:1.3rem;font-weight:700;color:#fff;margin-bottom:.4rem;}
+.calc-sub{font-family:var(--mono);font-size:.65rem;color:rgba(255,255,255,.4);margin-bottom:1.5rem;letter-spacing:.06em;}
+.calc-slider-wrap{display:flex;align-items:center;gap:1rem;margin-bottom:1.25rem;}
+.calc-slider-label{font-family:var(--mono);font-size:.65rem;color:rgba(255,255,255,.4);min-width:60px;}
+input[type=range]{flex:1;accent-color:var(--teal2);}
+.calc-amount{font-family:var(--serif);font-size:1.8rem;font-weight:700;color:var(--teal2);min-width:90px;text-align:right;}
+.calc-result{background:rgba(0,166,203,.12);border:1px solid rgba(0,166,203,.25);border-radius:3px;padding:1rem 1.25rem;}
+.calc-result-label{font-family:var(--mono);font-size:.6rem;color:rgba(255,255,255,.35);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.4rem;}
+.calc-result-text{font-family:var(--serif);font-size:1.1rem;color:#fff;font-style:italic;line-height:1.5;}
+
+/* CALLOUT */
+.callout{border-radius:3px;padding:1.1rem 1.4rem;margin:2rem 0;}
+.callout-teal{background:var(--teal-light);border-left:3px solid var(--teal);}
+.callout-note{background:#fff8e1;border-left:3px solid #f9a825;}
+.callout p{font-size:.88rem;line-height:1.7;margin:0;color:#3a3530;}
+.callout-label{font-family:var(--mono);font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);margin-bottom:.4rem;}
+.callout-note .callout-label{color:#7a5800;}
+
+/* FOOTER */
+footer{background:var(--ink);padding:1.5rem 3rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;border-top:1px solid rgba(255,255,255,.06);}
+.f-brand{font-family:var(--serif);font-size:.9rem;color:rgba(255,255,255,.5);font-style:italic;}
+.f-links{display:flex;gap:1.5rem;list-style:none;}
+.f-links a{font-family:var(--mono);font-size:.58rem;color:rgba(255,255,255,.25);text-decoration:none;letter-spacing:.08em;text-transform:uppercase;transition:color .2s;}
+.f-links a:hover{color:rgba(255,255,255,.6);}
+.f-copy{font-family:var(--mono);font-size:.58rem;color:rgba(255,255,255,.2);letter-spacing:.06em;}
+
+@media(max-width:768px){
+  nav{padding:.85rem 1.5rem;} .nav-progress{display:none;}
+  .cover-main{padding:5rem 1.5rem 2rem;}
+  .cover-bottom{padding:.75rem 1.5rem;}
+  article{padding:3rem 1.25rem;}
+  .counter-grid{grid-template-columns:repeat(2,1fr);}
+  .flip-grid{grid-template-columns:1fr 1fr;}
+  footer{flex-direction:column;text-align:center;}
+}
+</style>
+</head>
+<body>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-inner">
+    <span><span class="ticker-dot"></span>Hogar Diamante · Día del Niño · Septiembre 2025</span>
+    <span><span class="ticker-dot"></span>Crónica · A. Varela · Analista</span>
+    <span><span class="ticker-dot"></span>35 niños · Valle de Amarateca · Honduras</span>
+    <span><span class="ticker-dot"></span>Derechos humanos · Niñez · Impacto social</span>
+    <span><span class="ticker-dot"></span>Hogar Diamante · Día del Niño · Septiembre 2025</span>
+    <span><span class="ticker-dot"></span>Crónica · A. Varela · Analista</span>
+    <span><span class="ticker-dot"></span>35 niños · Valle de Amarateca · Honduras</span>
+    <span><span class="ticker-dot"></span>Derechos humanos · Niñez · Impacto social</span>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <a href="hogar-diamante-portada.html" class="nav-brand">
+    <span class="nav-name">A. Varela</span>
+    <span class="nav-role">Analista · Honduras</span>
+  </a>
+  <div class="nav-progress"><div class="nav-progress-fill" id="progressBar"></div></div>
+  <span class="nav-right">Hogar Diamante · Sep. 2025</span>
+</nav>
+
+<!-- COVER -->
+<header class="cover">
+  <div class="cover-bg"></div>
+  <div class="cover-main">
+    <div class="cover-eyebrow">Crónica · Día del Niño · Hogar Diamante</div>
+    <h1 class="cover-title">
+      Poder jugar,<br>trabajar y<br>dormir <em>tranquilos.</em>
+    </h1>
+    <p class="cover-sub">Cuando se les preguntó cuál era su mayor sueño, los niños del Hogar Diamante no pidieron juguetes ni viajes. Sus anhelos eran tan básicos como su derecho a tener una infancia. Esta es la historia de un Día del Niño en Amarateca.</p>
+    <div class="cover-byline">
+      <div class="byline-av">AV</div>
+      <div>
+        <span class="byline-name">A. Varela</span>
+        <span class="byline-role">Analista · Crónica periodística · Septiembre 2025</span>
+      </div>
+    </div>
+  </div>
+  <div class="cover-bottom">
+    <span class="cover-meta">Hogar Diamante · Asociación Juventud Renovada · Amarateca, Honduras</span>
+    <span class="cover-scroll">Desplaza para leer</span>
+  </div>
+</header>
+
+<!-- ARTICLE -->
+<article>
+
+  <div class="section-marker">
+    <span class="sm-num">01</span><div class="sm-line"></div><span class="sm-label">La escena</span>
+  </div>
+  <h2 class="section-title">Bajo los árboles, <em>el mundo se detiene</em></h2>
+
+  <p class="body-text dropcap">Bajo la sombra generosa de los árboles, las risas de un grupo de niños rompen el silencio de una mañana en el Valle de Amarateca. El césped se convierte en escenario de juegos, bromas y sueños compartidos. Son niños que juegan alegremente — algunos marcados por traumas y ausencias familiares — pero aquí, su mundo parece detenerse para permitirles ser lo que siempre debieron ser: simplemente niños.</p>
+
+  <p class="body-text">Este 13 de septiembre, en el marco del Día del Niño, Grupo Vesta en apoyo con proveedores llegó discretamente al Hogar Diamante, no como benefactores, sino como invitados a jugar. Lo que nadie esperaba era que un sencillo juego de preguntas revelaría algo mucho más profundo que cualquier cifra sobre pobreza infantil en Honduras.</p>
+
+  <blockquote>
+    <p>"Poder jugar, trabajar y dormir tranquilamente."</p>
+    <cite>Respuesta de un niño del Hogar Diamante cuando se le preguntó cuál era su mayor sueño · Septiembre 2025</cite>
+  </blockquote>
+
+  <p class="body-text">Ninguna mención a juguetes caros ni viajes. Sus anhelos eran tan básicos como su derecho a tener una infancia. En esas palabras cabe toda la historia del Hogar Diamante — y todo lo que todavía falta por hacer.</p>
+
+  <!-- STEPPER: La historia del Hogar -->
+  <div class="section-marker" style="margin-top:3rem;">
+    <span class="sm-num">02</span><div class="sm-line"></div><span class="sm-label">Quiénes son</span>
+  </div>
+  <h2 class="section-title">Un refugio con <em>casi cuatro décadas</em></h2>
+
+  <p class="body-text">El Hogar Diamante es una institución fundada en 1985 bajo la Asociación Juventud Renovada — una ONG sin fines de lucro que opera en el kilómetro 22 de la carretera al norte, en Amarateca. Hoy alberga aproximadamente 35 niños de entre 5 y 18 años a quienes cuidan, educan y protegen.</p>
+
+  <div class="stepper-wrap">
+    <div class="stepper-label">Recorrido por el Hogar — navegá su historia</div>
+    <div class="stepper-progress" id="stProg">
+      <div class="sp-pip active"></div>
+      <div class="sp-pip"></div>
+      <div class="sp-pip"></div>
+      <div class="sp-pip"></div>
+    </div>
+    <div class="stepper-stage active" id="st0">
+      <div class="stage-label">La misión</div>
+      <p class="stage-text">Según Roberto Carlos Zelaya, educador social con <strong>más de 18 años</strong> de trabajo en el Hogar, la misión es clara: <em>"Ayudar a los niños en riesgo social en cuanto a educación, salud y vivienda."</em> No es un discurso institucional — es la descripción de lo que hace cada mañana cuando llega a trabajar.</p>
+    </div>
+    <div class="stepper-stage" id="st1">
+      <div class="stage-label">Lo que ofrecen</div>
+      <p class="stage-text">El Hogar no solo brinda techo y alimento. Ofrece <strong>formación técnica con apoyo del INFOP</strong> y preparación universitaria con respaldo del IHER. Como describió Zelaya: <em>"Aquí aprenden aseo personal, higiene, formación técnica, cosas que en las calles o en sus antiguos hogares no recibieron."</em></p>
+    </div>
+    <div class="stepper-stage" id="st2">
+      <div class="stage-label">El mayor desafío</div>
+      <p class="stage-text">Una mirada de tristeza se refleja en el rostro de Zelaya al mencionar el obstáculo más difícil: <em>"El desinterés familiar. Esa herida invisible que carga cada niño."</em> Paola Izaguirre, educadora social, lo complementa: <em>"Este tipo de celebraciones les recuerda que son importantes y amados. Les enseñamos que aquí todos somos familia."</em></p>
+    </div>
+    <div class="stepper-stage" id="st3">
+      <div class="stage-label">Los logros</div>
+      <p class="stage-text">Don José Hidalgo, director general del Hogar, compartió una buena noticia durante la visita: <strong>cuatro adolescentes se graduarán este año como técnicos en electrónica</strong> y ya realizan prácticas en empresas reconocidas. Entre ellos, Kevin (nombre ficticio), quien ingresó al Hogar a los 7 años y hoy planea continuar hacia la universidad.</p>
+    </div>
+    <div class="stepper-nav">
+      <button class="st-btn" id="stPrev" onclick="stepNav(-1)" style="visibility:hidden">← Anterior</button>
+      <span class="st-step" id="stStep">1 / 4</span>
+      <button class="st-btn primary" id="stNext" onclick="stepNav(1)">Siguiente →</button>
+    </div>
+  </div>
+
+  <!-- CONTADORES -->
+  <div class="counter-band" id="counterBand">
+    <div class="counter-grid" style="grid-template-columns:repeat(3,1fr);">
+      <div class="counter-item">
+        <span class="counter-n" data-target="39">0</span>
+        <span class="counter-l">Años de historia</span>
+      </div>
+      <div class="counter-item">
+        <span class="counter-n" data-target="35">0</span>
+        <span class="counter-l">Niños en el hogar</span>
+      </div>
+      <div class="counter-item">
+        <span class="counter-n" data-target="4">0</span>
+        <span class="counter-l">Técnicos graduados 2025</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECCIÓN: Las escenas del día -->
+  <div class="section-marker">
+    <span class="sm-num">03</span><div class="sm-line"></div><span class="sm-label">El día</span>
+  </div>
+  <h2 class="section-title">Una jornada de <em>infancia devuelta</em></h2>
+
+  <p class="body-text">Mientras el sol filtraba su luz entre las ramas de los árboles, los niños habían olvidado — al menos por unas horas — la dureza de la calle y la ausencia familiar. El evento no se trataba de regalos, sino de devolver un pedazo de infancia.</p>
+
+  <p class="body-text">En una esquina, un grupo de pequeños observaba atentamente una piñata colgando de un árbol. Algunos murmuraban planes para golpearla con fuerza. No había vergüenza ni reservas, solo una emoción pura que llenaba el aire.</p>
+
+  <div class="pull-quote">
+    <p>"Este tipo de celebraciones les recuerda que son importantes y amados. Les enseñamos que aquí todos somos familia, que nos apoyamos unos a otros."</p>
+    <cite>Paola Izaguirre · Educadora social · Hogar Diamante</cite>
+  </div>
+
+  <p class="body-text">Al mirar a los niños, Zelaya los seguía con la mirada — cada juego, cada carcajada, cada mirada. Sus 18 años en el Hogar se reflejan en esa forma de observar: la de alguien que conoce cada historia, cada cicatriz, cada avance.</p>
+
+  <!-- FLIP CARDS -->
+  <div class="section-marker">
+    <span class="sm-num">04</span><div class="sm-line"></div><span class="sm-label">Historias</span>
+  </div>
+  <h2 class="section-title">Antes y <em>después</em></h2>
+  <p class="body-text" style="margin-bottom:.5rem;">Cada niño que cruza las puertas del Hogar trae consigo cicatrices invisibles. Y cada uno lleva también una chispa de esperanza que aquí se alimenta con paciencia. Hacé clic en cada tarjeta para ver la transformación.</p>
+
+  <div class="flip-hint">Toca cada tarjeta para revelar la historia</div>
+  <div class="flip-grid">
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front">
+          <div class="flip-num">Historia 01</div>
+          <div class="flip-name">Roberto Carlos Zelaya</div>
+          <div class="flip-before">Educador social · 18 años en el Hogar</div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-after-label">Su mirada hoy</div>
+          <div class="flip-after">"Cada reencuentro con una familia es la prueba de que se puede."</div>
+          <div class="flip-after-sub">Ha visto a decenas completar estudios técnicos y conseguir empleo digno.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front">
+          <div class="flip-num">Historia 02</div>
+          <div class="flip-name">Kevin</div>
+          <div class="flip-before">Nombre ficticio · Ingresó al Hogar a los 7 años</div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-after-label">Su historia hoy</div>
+          <div class="flip-after">Se gradúa como técnico en electrónica en 2025.</div>
+          <div class="flip-after-sub">Ya realiza prácticas profesionales en una empresa reconocida. Planea ir a la universidad.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front">
+          <div class="flip-num">Historia 03</div>
+          <div class="flip-name">Un niño pequeño</div>
+          <div class="flip-before">Se detuvo un momento entre los árboles y respiró hondo.</div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-after-label">Lo que dijo</div>
+          <div class="flip-after">"Mañana domingo veré a mi abuela y le enseñaré el par de zapatos que me regalaron."</div>
+          <div class="flip-after-sub">Quizás, por primera vez en mucho tiempo, se permitió imaginar un futuro distinto.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front">
+          <div class="flip-num">Historia 04</div>
+          <div class="flip-name">Paola Izaguirre</div>
+          <div class="flip-before">Educadora social · Lleva años acompañando a los niños del Hogar</div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-after-label">Su convicción</div>
+          <div class="flip-after">"Esa forma de pensar los ayuda a tener resiliencia y a no abandonar el Hogar."</div>
+          <div class="flip-after-sub">Cree que enseñarles que son familia es tan importante como cualquier materia.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- CIERRE NARRATIVO -->
+  <div class="section-marker">
+    <span class="sm-num">05</span><div class="sm-line"></div><span class="sm-label">Cierre</span>
+  </div>
+  <h2 class="section-title">Cuando el sol <em>comenzó a bajar</em></h2>
+
+  <p class="body-text">Las voces infantiles siguieron resonando, como promesas lanzadas al viento. En ese rincón de Amarateca, la esperanza brilló un poco más fuerte. El Hogar Diamante no presume sus logros ni busca protagonismo. Su trabajo es silencioso y constante — hecho de noches en vela, tareas escolares y manos que acompañan.</p>
+
+  <p class="body-text">La jornada del Día del Niño no solo ofreció dulces, regalos y juegos. También fue una lección silenciosa para todos los que estuvieron presentes: el afecto puede ser tan vital como el alimento, y las segundas oportunidades existen cuando alguien decide tender la mano.</p>
+
+  <blockquote>
+    <p>"El Hogar Diamante no solo les ofrece techo y alimento — les devuelve el derecho a soñar, reír y sentirse valiosos."</p>
+    <cite>Observación de campo · Día del Niño · Septiembre 2025</cite>
+  </blockquote>
+
+  <!-- CALCULADOR DE DONACIÓN -->
+  <div class="section-marker">
+    <span class="sm-num">06</span><div class="sm-line"></div><span class="sm-label">Tu impacto</span>
+  </div>
+  <h2 class="section-title">¿Cuánto puede cambiar <em>tu aporte?</em></h2>
+  <p class="body-text">El Hogar opera con un costo mensual de alrededor de L250,000. Cada lempira tiene un destino concreto. Mové el control para ver qué cubre tu donación.</p>
+
+  <div class="calc-wrap">
+    <div class="calc-title">Calculadora de impacto</div>
+    <div class="calc-sub">Arrastrá para ver qué hace tu donación</div>
+    <div class="calc-slider-wrap">
+      <span class="calc-slider-label">L 500</span>
+      <input type="range" id="donSlider" min="500" max="10000" step="200" value="500" oninput="updateCalc(this.value)">
+      <span class="calc-amount" id="donAmount">L 500</span>
+    </div>
+    <div class="calc-result">
+      <div class="calc-result-label">Con esta donación podés</div>
+      <div class="calc-result-text" id="calcResult">Cubrir la alimentación de un niño durante un mes completo.</div>
+    </div>
+  </div>
+
+  <div class="callout callout-note">
+    <div class="callout-label">Nota periodística</div>
+    <p>Los nombres de José Hidalgo y Roberto Carlos Zelaya aparecen con autorización para uso público en el contexto de este reportaje. Kevin es un nombre ficticio usado para proteger la identidad del menor. Las cifras de costos son estimaciones compartidas por representantes del Hogar durante la visita de campo del 13 de septiembre de 2025.</p>
+  </div>
+
+  <div class="callout callout-teal" style="margin-top:1.5rem;">
+    <div class="callout-label">Cómo apoyar</div>
+    <p>Para donaciones o información sobre patrocinio corporativo, contactá directamente al Hogar Diamante: <a href="/cdn-cgi/l/email-protection#452d2a222437212c2428242b3120053c242d2a2a6b262a28" style="color:var(--teal);font-weight:500;"><span class="__cf_email__" data-cfemail="c7afa8a0a6b5a3aea6aaa6a9b3a287bea6afa8a8e9a4a8aa">[email&#160;protected]</span></a> · Tel. 9704-3820 · Km. 22, Carretera al Norte, Amarateca, Francisco Morazán.</p>
+  </div>
+
+</article>
+
+<!-- FOOTER -->
+<footer>
+  <span class="f-brand">Hogar Diamante · Crónica · A. Varela · 2025</span>
+  <ul class="f-links">
+    <li><a href="hogar-diamante-portada.html">← Hogar Diamante</a></li>
+    <li><a href="index.html">Portafolio</a></li>
+  </ul>
+  <span class="f-copy">Asociación Juventud Renovada · Amarateca, Honduras</span>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+// PROGRESS BAR
+window.addEventListener('scroll',()=>{
+  const h=document.documentElement;
+  const pct=(h.scrollTop/(h.scrollHeight-h.clientHeight))*100;
+  document.getElementById('progressBar').style.width=pct+'%';
+});
+
+// STEPPER
+let curSt=0; const totalSt=4;
+function stepNav(dir){
+  document.getElementById('st'+curSt).classList.remove('active');
+  const pips=document.querySelectorAll('.sp-pip');
+  pips[curSt].classList.remove('active'); pips[curSt].classList.add('done');
+  curSt=Math.max(0,Math.min(totalSt-1,curSt+dir));
+  document.getElementById('st'+curSt).classList.add('active');
+  pips[curSt].classList.remove('done'); pips[curSt].classList.add('active');
+  document.getElementById('stStep').textContent=(curSt+1)+' / '+totalSt;
+  document.getElementById('stPrev').style.visibility=curSt>0?'visible':'hidden';
+  const nxt=document.getElementById('stNext');
+  nxt.textContent=curSt===totalSt-1?'Volver al inicio →':'Siguiente →';
+  if(curSt===totalSt-1){nxt.onclick=()=>{
+    pips.forEach(p=>{p.classList.remove('active','done');});
+    pips[0].classList.add('active');
+    document.querySelectorAll('.stepper-stage').forEach(s=>s.classList.remove('active'));
+    curSt=0; document.getElementById('st0').classList.add('active');
+    document.getElementById('stStep').textContent='1 / '+totalSt;
+    document.getElementById('stPrev').style.visibility='hidden';
+    nxt.textContent='Siguiente →'; nxt.onclick=()=>stepNav(1);
+  };}
+}
+
+// COUNTER ANIMATION — se activa al cargar Y al hacer scroll
+function animateCounters() {
+  document.querySelectorAll('.counter-n[data-target]').forEach(c => {
+    const target = parseInt(c.dataset.target);
+    let current = 0;
+    const step = Math.max(1, Math.ceil(target / 50));
+    const timer = setInterval(() => {
+      current = Math.min(current + step, target);
+      c.textContent = current + (target >= 100 ? '+' : '');
+      if (current >= target) clearInterval(timer);
+    }, 35);
+  });
+}
+// Dispara al cargar
+window.addEventListener('load', () => {
+  const band = document.getElementById('counterBand');
+  const rect = band.getBoundingClientRect();
+  if (rect.top < window.innerHeight) {
+    animateCounters();
+  } else {
+    const obs = new IntersectionObserver(entries => {
+      if (entries[0].isIntersecting) { animateCounters(); obs.disconnect(); }
+    }, { threshold: 0.3 });
+    obs.observe(band);
+  }
+});
+
+// CALCULATOR
+const calcData = [
+  { max: 500,  text: 'Cubrir la alimentación de un niño durante un mes completo.' },
+  { max: 800,  text: 'Financiar útiles escolares y materiales de higiene para dos niños por un mes.' },
+  { max: 1000, text: 'Cubrir gastos médicos básicos y medicamentos de un niño por un mes.' },
+  { max: 1200, text: 'Pagar el transporte escolar de dos niños durante un mes completo.' },
+  { max: 1400, text: 'Financiar materiales de un taller vocacional por dos semanas.' },
+  { max: 1600, text: 'Contribuir a la alimentación de tres niños durante todo un mes.' },
+  { max: 1800, text: 'Cubrir el costo de uniformes escolares para un niño del Hogar.' },
+  { max: 2000, text: 'Financiar un mes completo de materiales en un taller vocacional.' },
+  { max: 2500, text: 'Pagar la alimentación de cinco niños durante una semana completa.' },
+  { max: 3000, text: 'Cubrir los gastos de formación técnica de un joven por un mes.' },
+  { max: 4000, text: 'Financiar dos talleres vocacionales completos durante un mes.' },
+  { max: 5000, text: 'Convertirte en padrino del Hogar — recibirás actualizaciones directas del impacto.' },
+  { max: 7000, text: 'Cubrir casi el 3% del costo mensual total del Hogar Diamante (L250,000).' },
+  { max: 10000, text: 'Financiar más del 4% del costo mensual — equivalente a la manutención completa de un niño por mes.' }
+];
+function updateCalc(v) {
+  const val = parseInt(v);
+  document.getElementById('donAmount').textContent = 'L ' + val.toLocaleString();
+  const entry = calcData.find(d => val <= d.max) || calcData[calcData.length - 1];
+  document.getElementById('calcResult').textContent = entry.text;
+}
+// Inicializar calculadora al cargar
+window.addEventListener('DOMContentLoaded', () => updateCalc(500));
+</script>
+</body>
+</html>
