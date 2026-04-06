@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A prueba de fuego · Storytelling humanitario · A. Varela</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Syne:wght@300;400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink:#0e0e0e; --paper:#f5f5f5; --paper2:#e0f7fa; --paper3:#b2ebf2;
+  --red:#b83214; --teal:#00818E; --teal2:#00A6CB; --teal-light:#e0f7fa;
+  --muted:#6a6a6a; --border:rgba(14,14,14,.08); --border2:rgba(14,14,14,.15);
+  --mono:'IBM Plex Mono',monospace; --serif:'Playfair Display',serif; --sans:'Syne',sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-weight:300;line-height:1.7;overflow-x:hidden;}
+
+/* TICKER */
+.ticker{background:var(--ink);color:var(--paper);font-family:var(--mono);font-size:.62rem;letter-spacing:.08em;padding:.4rem 0;overflow:hidden;white-space:nowrap;}
+.ticker-inner{display:inline-flex;gap:2.5rem;animation:tick 32s linear infinite;}
+.ticker-dot{width:5px;height:5px;border-radius:50%;background:var(--red);display:inline-block;margin-right:.5rem;}
+@keyframes tick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* NAV */
+nav{background:rgba(245,245,245,.94);backdrop-filter:blur(12px);border-bottom:1px solid var(--border2);display:flex;align-items:center;justify-content:space-between;padding:1rem 3rem;position:sticky;top:0;z-index:100;}
+.nav-brand{text-decoration:none;color:var(--ink);display:flex;flex-direction:column;gap:1px;}
+.nav-name{font-family:var(--serif);font-size:1rem;font-weight:700;letter-spacing:-.02em;}
+.nav-role{font-family:var(--mono);font-size:.55rem;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;}
+.nav-progress{flex:1;max-width:180px;margin:0 2rem;height:2px;background:var(--border2);border-radius:1px;overflow:hidden;}
+.nav-progress-fill{height:100%;background:var(--teal);border-radius:1px;width:0%;transition:width .2s;}
+.nav-right{font-family:var(--mono);font-size:.6rem;color:var(--muted);letter-spacing:.08em;}
+
+/* COVER — fondo oscuro dramático */
+.cover{min-height:100vh;background:var(--ink);display:grid;grid-template-rows:1fr auto;position:relative;overflow:hidden;}
+.cover-grain{position:absolute;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;opacity:.6;}
+.cover-grid{position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 39px,rgba(255,255,255,.018) 39px,rgba(255,255,255,.018) 40px),repeating-linear-gradient(90deg,transparent,transparent 39px,rgba(255,255,255,.018) 39px,rgba(255,255,255,.018) 40px);pointer-events:none;}
+.cover-main{padding:7rem 3rem 3rem;max-width:860px;margin:0 auto;width:100%;position:relative;z-index:1;display:flex;flex-direction:column;justify-content:flex-end;}
+.cover-eyebrow{font-family:var(--mono);font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:var(--teal2);margin-bottom:1.5rem;display:flex;align-items:center;gap:.75rem;animation:fu .7s ease both;}
+.cover-eyebrow::before{content:'';width:20px;height:1px;background:var(--teal2);}
+.cover-restrict{font-family:var(--mono);font-size:.65rem;letter-spacing:.1em;color:var(--red);margin-bottom:1rem;animation:fu .7s ease both;}
+.cover-restrict span{background:rgba(184,50,20,.15);border:1px solid rgba(184,50,20,.3);padding:.2rem .6rem;border-radius:2px;}
+.cover-title{font-family:var(--serif);font-size:clamp(3.5rem,8vw,7rem);font-weight:700;line-height:.98;letter-spacing:-.03em;color:#fff;margin-bottom:1.5rem;animation:fu .8s .1s ease both;text-transform:uppercase;}
+.cover-title em{font-style:italic;color:var(--teal2);text-transform:none;}
+.cover-sub{font-size:1rem;color:rgba(255,255,255,.5);max-width:540px;line-height:1.8;margin-bottom:2.5rem;border-left:2px solid rgba(0,166,203,.35);padding-left:1.25rem;animation:fu .9s .2s ease both;}
+.cover-byline{display:flex;align-items:center;gap:1rem;padding-top:1.5rem;border-top:1px solid rgba(255,255,255,.07);animation:fu 1s .3s ease both;}
+.byline-av{width:36px;height:36px;background:var(--teal);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:.62rem;color:#fff;font-weight:500;flex-shrink:0;}
+.byline-name{font-family:var(--serif);font-size:.9rem;font-weight:700;color:#fff;display:block;}
+.byline-role{font-family:var(--mono);font-size:.55rem;color:rgba(255,255,255,.35);letter-spacing:.1em;text-transform:uppercase;}
+.cover-bottom{border-top:1px solid rgba(255,255,255,.06);padding:1rem 3rem;display:flex;align-items:center;justify-content:space-between;position:relative;z-index:1;}
+.cover-meta{font-family:var(--mono);font-size:.6rem;color:rgba(255,255,255,.25);letter-spacing:.06em;}
+.cover-scroll{font-family:var(--mono);font-size:.6rem;color:rgba(255,255,255,.25);letter-spacing:.12em;text-transform:uppercase;display:flex;align-items:center;gap:.5rem;animation:bob 2s ease-in-out infinite;}
+.cover-scroll::before{content:'';width:16px;height:1px;background:var(--teal2);}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(4px)}}
+@keyframes fu{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+
+/* ARTICLE */
+article{max-width:720px;margin:0 auto;padding:4rem 2rem;}
+.section-marker{display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem;margin-top:3.5rem;}
+.section-marker:first-child{margin-top:0;}
+.sm-num{font-family:var(--mono);font-size:.6rem;color:var(--teal);letter-spacing:.1em;}
+.sm-line{flex:1;height:1px;background:var(--border2);}
+.sm-label{font-family:var(--mono);font-size:.6rem;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;}
+h2.section-title{font-family:var(--serif);font-size:clamp(1.6rem,3vw,2.2rem);font-weight:700;line-height:1.15;letter-spacing:-.02em;margin-bottom:1rem;}
+h2.section-title em{font-style:italic;color:var(--red);}
+p.body-text{font-size:.95rem;color:#3a3530;line-height:1.9;margin-bottom:1.25rem;}
+p.body-text strong{font-weight:500;color:var(--ink);}
+.dropcap::first-letter{font-family:var(--serif);font-size:4rem;font-weight:700;float:left;line-height:.85;padding-right:.12em;padding-top:.06em;color:var(--teal);}
+
+/* CONTEXT GRID */
+.context-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border2);border:1px solid var(--border2);border-radius:4px;overflow:hidden;margin:2rem 0;}
+.context-cell{background:var(--paper);padding:1.5rem;}
+.context-cell.dark{background:var(--ink);color:#fff;}
+.context-cell-label{font-family:var(--mono);font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;color:var(--teal2);margin-bottom:.75rem;display:flex;align-items:center;gap:.5rem;}
+.context-cell.dark .context-cell-label{color:var(--teal2);}
+.context-cell-label::before{content:'';width:10px;height:1px;background:var(--teal2);}
+.context-cell-text{font-size:.85rem;line-height:1.75;color:#3a3530;}
+.context-cell.dark .context-cell-text{color:rgba(255,255,255,.6);}
+
+/* DECISIONS */
+.decisions{display:flex;flex-direction:column;gap:8px;margin:1.5rem 0;}
+.decision-item{display:flex;gap:12px;align-items:flex-start;padding:.85rem 1rem;background:var(--paper2);border-radius:3px;border-left:2px solid var(--teal);}
+.decision-key{font-family:var(--sans);font-size:.85rem;font-weight:500;color:var(--ink);min-width:180px;flex-shrink:0;}
+.decision-arrow{font-family:var(--mono);font-size:.8rem;color:var(--teal2);padding-top:1px;}
+.decision-val{font-size:.85rem;color:var(--muted);line-height:1.5;}
+
+/* NARRATIVE STEPPER */
+.narrative-wrap{background:var(--ink);border-radius:4px;padding:2rem;margin:2rem 0;color:#fff;}
+.narrative-label{font-family:var(--mono);font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;color:var(--teal2);margin-bottom:1.25rem;display:flex;align-items:center;gap:.5rem;}
+.narrative-label::before{content:'';width:12px;height:1px;background:var(--teal2);}
+.narrative-progress{display:flex;gap:4px;margin-bottom:1.5rem;}
+.np-pip{height:3px;flex:1;background:rgba(255,255,255,.1);border-radius:2px;transition:background .4s;}
+.np-pip.done{background:var(--teal);}
+.np-pip.active{background:var(--teal2);}
+.narrative-stage{display:none;}
+.narrative-stage.active{display:block;}
+.ns-member{font-family:var(--mono);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--teal2);margin-bottom:.4rem;}
+.ns-headline{font-family:var(--serif);font-size:1.2rem;font-style:italic;color:#fff;line-height:1.4;margin-bottom:.6rem;}
+.ns-detail{font-family:var(--mono);font-size:.72rem;color:rgba(255,255,255,.5);padding:.5rem .75rem;background:rgba(255,255,255,.04);border-radius:2px;border-left:2px solid var(--teal2);}
+.ns-need{font-size:.82rem;color:rgba(255,255,255,.6);margin-top:.75rem;line-height:1.6;}
+.ns-cta{font-family:var(--mono);font-size:.7rem;color:#fff;background:var(--teal);padding:.5rem 1.1rem;border-radius:2px;margin-top:.85rem;display:inline-block;letter-spacing:.06em;}
+.narrative-nav{display:flex;justify-content:space-between;align-items:center;margin-top:1.5rem;padding-top:1rem;border-top:1px solid rgba(255,255,255,.07);}
+.nv-btn{font-family:var(--mono);font-size:.65rem;letter-spacing:.08em;text-transform:uppercase;padding:.5rem 1.1rem;border-radius:2px;border:1px solid rgba(255,255,255,.15);background:transparent;color:rgba(255,255,255,.45);cursor:pointer;transition:all .2s;}
+.nv-btn:hover{background:rgba(255,255,255,.08);color:#fff;}
+.nv-btn.primary{background:var(--teal);border-color:var(--teal);color:#fff;}
+.nv-step{font-family:var(--mono);font-size:.62rem;color:rgba(255,255,255,.3);}
+
+/* RESULTS */
+.results-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border2);border:1px solid var(--border2);border-radius:4px;overflow:hidden;margin:2rem 0;}
+.result-cell{background:var(--ink);padding:1.75rem 1.5rem;text-align:center;}
+.result-num{font-family:var(--mono);font-size:1.8rem;font-weight:500;color:var(--teal2);display:block;margin-bottom:.35rem;}
+.result-label{font-family:var(--mono);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);display:block;margin-bottom:.75rem;}
+.result-text{font-size:.8rem;color:rgba(255,255,255,.45);line-height:1.6;}
+
+/* LEARNINGS */
+.learnings{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:2rem 0;}
+.learning-item{border:1px solid var(--border2);border-radius:4px;padding:1.25rem;position:relative;overflow:hidden;}
+.learning-item::before{content:'"';position:absolute;top:-.5rem;left:.75rem;font-family:var(--serif);font-size:4rem;color:var(--teal2);opacity:.1;line-height:1;}
+.learning-text{font-family:var(--serif);font-size:.95rem;font-style:italic;color:var(--ink);line-height:1.6;position:relative;z-index:1;}
+
+/* ETHICAL NOTE */
+.ethical-note{background:var(--teal-light);border:1px solid rgba(0,129,142,.2);border-radius:4px;padding:1.25rem 1.5rem;margin:2rem 0;}
+.en-label{font-family:var(--mono);font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);margin-bottom:.5rem;}
+.en-text{font-size:.85rem;color:#3a3530;line-height:1.75;}
+
+/* BLOCKQUOTE */
+blockquote{border-left:3px solid var(--teal);padding:.85rem 1.25rem;margin:2rem 0;background:var(--teal-light);border-radius:0 4px 4px 0;}
+blockquote p{font-family:var(--serif);font-size:1.05rem;font-style:italic;color:var(--ink);line-height:1.6;margin:0;}
+
+/* FOOTER */
+footer{background:var(--ink);padding:1.5rem 3rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;}
+.f-brand{font-family:var(--serif);font-size:.9rem;color:rgba(255,255,255,.5);font-style:italic;}
+.f-links{display:flex;gap:1.5rem;list-style:none;}
+.f-links a{font-family:var(--mono);font-size:.58rem;color:rgba(255,255,255,.25);text-decoration:none;letter-spacing:.08em;text-transform:uppercase;transition:color .2s;}
+.f-links a:hover{color:rgba(255,255,255,.6);}
+.f-copy{font-family:var(--mono);font-size:.58rem;color:rgba(255,255,255,.2);letter-spacing:.06em;}
+
+@media(max-width:768px){
+  nav{padding:.85rem 1.5rem;} .nav-progress{display:none;}
+  .cover-main{padding:5rem 1.5rem 2rem;}
+  .cover-bottom{padding:.75rem 1.5rem;}
+  article{padding:3rem 1.25rem;}
+  .context-grid{grid-template-columns:1fr;}
+  .results-grid{grid-template-columns:1fr;}
+  .learnings{grid-template-columns:1fr;}
+  footer{flex-direction:column;text-align:center;}
+}
+</style>
+</head>
+<body>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-inner">
+    <span><span class="ticker-dot"></span>A prueba de fuego · Storytelling humanitario</span>
+    <span><span class="ticker-dot"></span>Campaña interna · A. Varela · Diciembre 2025</span>
+    <span><span class="ticker-dot"></span>Comunicación estratégica · Anonimato · Empatía</span>
+    <span><span class="ticker-dot"></span>Storytelling · Imágenes IA · Dirección creativa</span>
+    <span><span class="ticker-dot"></span>A prueba de fuego · Storytelling humanitario</span>
+    <span><span class="ticker-dot"></span>Campaña interna · A. Varela · Diciembre 2025</span>
+    <span><span class="ticker-dot"></span>Comunicación estratégica · Anonimato · Empatía</span>
+    <span><span class="ticker-dot"></span>Storytelling · Imágenes IA · Dirección creativa</span>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-brand">
+    <span class="nav-name">A. Varela</span>
+    <span class="nav-role">Analista · Honduras</span>
+  </a>
+  <div class="nav-progress"><div class="nav-progress-fill" id="progressBar"></div></div>
+  <span class="nav-right">Caso de estudio · Dic. 2025</span>
+</nav>
+
+<!-- COVER -->
+<header class="cover">
+  <div class="cover-grain"></div>
+  <div class="cover-grid"></div>
+  <div class="cover-main">
+    <div class="cover-eyebrow">Caso de estudio · Storytelling humanitario · Comunicación interna</div>
+    <div class="cover-restrict"><span>Restricción: anonimato total · Identidad de la familia protegida</span></div>
+    <h1 class="cover-title">A prueba<br>de <em>fuego</em></h1>
+    <p class="cover-sub">El 24 de diciembre de 2025, una familia hondureña perdió su hogar en un incendio. El reto: movilizar apoyo interno sin exponer su identidad. La solución: cuando no se pueden mostrar nombres, se deben contar historias.</p>
+    <div class="cover-byline">
+      <div class="byline-av">AV</div>
+      <div>
+        <span class="byline-name">A. Varela</span>
+        <span class="byline-role">Dirección creativa · Storytelling · Conceptualización · Dic. 2025</span>
+      </div>
+    </div>
+  </div>
+  <div class="cover-bottom">
+    <span class="cover-meta">Campaña interna · Publicada con autorización · Honduras · 2025</span>
+    <span class="cover-scroll">Desplaza para leer</span>
+  </div>
+</header>
+
+<!-- ARTICLE -->
+<article>
+
+  <!-- CONTEXTO Y DECISIONES -->
+  <div class="section-marker">
+    <span class="sm-num">01</span><div class="sm-line"></div><span class="sm-label">El reto</span>
+  </div>
+  <h2 class="section-title">Movilizar ayuda <em>sin exponer identidades</em></h2>
+
+  <p class="body-text dropcap">La noche del 24 de diciembre de 2025, una familia hondureña perdió su hogar en un incendio que consumió años de esfuerzo, recuerdos y estabilidad. En medio de la tragedia, surgió un reto desde la comunicación interna: ¿cómo movilizar apoyo real — ropa, calzado, útiles escolares — sin comprometer la privacidad de una familia que ya había perdido suficiente?</p>
+
+  <p class="body-text">La respuesta no estaba en los formularios de donación ni en los comunicados institucionales. Estaba en una premisa de comunicación estratégica: <strong>las personas no reaccionan ante necesidades generales, reaccionan ante historias específicas.</strong> Donar "ropa" es abstracto. Donar para "un niño de 8 años que quiere seguir estudiando" es emocional.</p>
+
+  <div class="context-grid">
+    <div class="context-cell">
+      <div class="context-cell-label">Contexto</div>
+      <div class="context-cell-text">Familia de 5 integrantes. Incendio ocurrido el 24 de diciembre de 2025. Perdieron ropa, calzado, útiles escolares y estabilidad. Estaban a salvo, resguardados por un familiar. Necesitaban apoyo para empezar de nuevo.</div>
+    </div>
+    <div class="context-cell dark">
+      <div class="context-cell-label">La restricción</div>
+      <div class="context-cell-text">Anonimato total. No se podían mostrar nombres, rostros reales ni detalles de identidad. La campaña debía proteger la dignidad de la familia mientras generaba empatía suficiente para motivar acción concreta.</div>
+    </div>
+    <div class="context-cell">
+      <div class="context-cell-label">Objetivo</div>
+      <div class="context-cell-text">Activar la empatía de los colaboradores para generar apoyo tangible, utilizando storytelling como herramienta principal, sin comprometer la privacidad de la familia.</div>
+    </div>
+    <div class="context-cell dark">
+      <div class="context-cell-label">Insight central</div>
+      <div class="context-cell-text">La narrativa individual genera mayor conexión emocional que los llamamientos generales. Una historia específica — con edades, tallas, necesidades concretas — convierte la compasión en acción.</div>
+    </div>
+  </div>
+
+  <!-- DECISIONES ESTRATÉGICAS -->
+  <div class="section-marker">
+    <span class="sm-num">02</span><div class="sm-line"></div><span class="sm-label">Decisiones estratégicas</span>
+  </div>
+  <h2 class="section-title">Cada decisión tenía <em>una razón</em></h2>
+
+  <div class="decisions">
+    <div class="decision-item">
+      <span class="decision-key">Narrativa individual</span>
+      <span class="decision-arrow">→</span>
+      <span class="decision-val">Mayor conexión emocional. Cada miembro de la familia tiene su propia historia, su propia necesidad específica.</span>
+    </div>
+    <div class="decision-item">
+      <span class="decision-key">Anonimato como recurso</span>
+      <span class="decision-arrow">→</span>
+      <span class="decision-val">Protección de identidad + enfoque en la historia. El anonimato no fue una limitación — fue el concepto.</span>
+    </div>
+    <div class="decision-item">
+      <span class="decision-key">Luz cálida en imágenes</span>
+      <span class="decision-arrow">→</span>
+      <span class="decision-val">Contraste visual entre la tragedia y la esperanza. La luz comunica que hay posibilidad de reconstrucción.</span>
+    </div>
+    <div class="decision-item">
+      <span class="decision-key">Composición frontal</span>
+      <span class="decision-arrow">→</span>
+      <span class="decision-val">Confronta al espectador emocionalmente. La mirada directa — aunque sea generada por IA — genera responsabilidad en quien observa.</span>
+    </div>
+    <div class="decision-item">
+      <span class="decision-key">Copy minimalista</span>
+      <span class="decision-arrow">→</span>
+      <span class="decision-val">Evita saturación y mantiene impacto. Menos texto = más peso emocional por palabra.</span>
+    </div>
+    <div class="decision-item">
+      <span class="decision-key">Imágenes generadas por IA</span>
+      <span class="decision-arrow">→</span>
+      <span class="decision-val">Solución ética ante la restricción de no mostrar identidades reales. Permite visualizar la historia sin exponer a nadie.</span>
+    </div>
+  </div>
+
+  <!-- NARRATIVA: stepper por integrante -->
+  <div class="section-marker">
+    <span class="sm-num">03</span><div class="sm-line"></div><span class="sm-label">La narrativa</span>
+  </div>
+  <h2 class="section-title">Cinco historias. <em>Una familia.</em></h2>
+  <p class="body-text">Cada integrante de la familia fue el centro de una pieza independiente. La narrativa seguía un arco progresivo: Contexto → Empatía → Necesidad → Acción. Navegá cada historia.</p>
+
+  <div class="narrative-wrap">
+    <div class="narrative-label">La narrativa de la campaña — navegá cada historia</div>
+    <div class="narrative-progress" id="nProg">
+      <div class="np-pip active"></div>
+      <div class="np-pip"></div>
+      <div class="np-pip"></div>
+      <div class="np-pip"></div>
+      <div class="np-pip"></div>
+    </div>
+
+    <div class="narrative-stage active" id="ns0">
+      <img src="B1.jpg" alt="La familia frente a su hogar destruido" style="width:100%;border-radius:3px;margin-bottom:1.25rem;display:block;max-height:420px;object-fit:cover;">
+      <div class="ns-member">La familia · Pieza 1 de 5</div>
+      <div class="ns-headline">"La pasada Navidad, una familia hondureña lo perdió todo. Un incendio consumió su hogar… y con él, años de esfuerzo."</div>
+      <div class="ns-detail">Hoy están a salvo, resguardados por un familiar. Pero necesitan apoyo para volver a empezar. Perdieron ropa, zapatos, útiles escolares…</div>
+      <div class="ns-need">Puedes ser parte de su nuevo comienzo. Dona ropa, calzado o útiles escolares.</div>
+    </div>
+    <div class="narrative-stage" id="ns1">
+      <img src="B3.jpg" alt="El padre de la familia" style="width:100%;border-radius:3px;margin-bottom:1.25rem;display:block;max-height:420px;object-fit:cover;">
+      <div class="ns-member">El padre · Pieza 2 de 5</div>
+      <div class="ns-headline">"Él sigue de pie. Intentando proteger a su familia, incluso cuando lo ha perdido todo."</div>
+      <div class="ns-detail">36 años · Talla M · Calzado 41</div>
+      <div class="ns-need">Hoy necesita apoyo para reconstruir desde cero.</div>
+    </div>
+    <div class="narrative-stage" id="ns2">
+      <img src="B4.jpg" alt="La madre de la familia" style="width:100%;border-radius:3px;margin-bottom:1.25rem;display:block;max-height:420px;object-fit:cover;">
+      <div class="ns-member">La madre · Pieza 3 de 5</div>
+      <div class="ns-headline">"Perdió su hogar, pero no su fortaleza. Hoy sigue cuidando y sosteniendo a su familia con lo único que no perdió: el amor por su familia."</div>
+      <div class="ns-detail">34 años · Talla M · Calzado 37</div>
+      <div class="ns-need">Cada prenda que dones es un gesto de solidaridad hacia alguien que no perdió la esperanza.</div>
+    </div>
+    <div class="narrative-stage" id="ns3">
+      <img src="b5.jpg" alt="Los niños mayores" style="width:100%;border-radius:3px;margin-bottom:1.25rem;display:block;max-height:420px;object-fit:cover;">
+      <div class="ns-member">Los niños mayores · Pieza 4 de 5</div>
+      <div class="ns-headline">"Quieren seguir estudiando. Pero el incendio también se llevó sus cuadernos, uniformes y zapatos."</div>
+      <div class="ns-detail">11 y 8 años · Calzado 34 y 32</div>
+      <div class="ns-need">Hoy necesitan apoyo para volver a la escuela. Un cuaderno, un uniforme, un par de zapatos puede ser el primer paso.</div>
+    </div>
+    <div class="narrative-stage" id="ns4">
+      <img src="b6.jpg" alt="La niña pequeña" style="width:100%;border-radius:3px;margin-bottom:1.25rem;display:block;max-height:420px;object-fit:cover;">
+      <div class="ns-member">La niña pequeña · Pieza 5 de 5</div>
+      <div class="ns-headline">"Aún quiere jugar. Pero el incendio también se llevó sus muñecas."</div>
+      <div class="ns-detail">5 años · Calzado 26</div>
+      <div class="ns-need">Hoy necesita ayuda para volver a ser niña. Porque la infancia no debería detenerse por una tragedia.</div>
+    </div>
+
+    <div class="narrative-nav">
+      <button class="nv-btn" id="nPrev" onclick="narrativeNav(-1)" style="visibility:hidden">← Anterior</button>
+      <span class="nv-step" id="nStep">1 / 5</span>
+      <button class="nv-btn primary" id="nNext" onclick="narrativeNav(1)">Siguiente →</button>
+    </div>
+  </div>
+
+  <!-- GALERÍA DE PIEZAS -->
+  <div class="section-marker">
+    <span class="sm-num">04</span><div class="sm-line"></div><span class="sm-label">Las piezas completas</span>
+  </div>
+  <h2 class="section-title">La campaña en <em>seis piezas</em></h2>
+  <p class="body-text">Cada pieza de la campaña fue diseñada para circular de forma independiente, con su propio peso narrativo. Juntas, construyen una historia completa.</p>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:1.5rem 0;">
+    <div style="position:relative;border-radius:4px;overflow:hidden;">
+      <img src="B1.jpg" alt="Pieza 1 — La familia" style="width:100%;display:block;aspect-ratio:1;object-fit:cover;">
+      <div style="position:absolute;bottom:0;left:0;right:0;background:linear-gradient(to top,rgba(0,0,0,.8) 0%,transparent 100%);padding:.75rem;font-family:var(--mono);font-size:.6rem;color:rgba(255,255,255,.7);letter-spacing:.06em;">PIEZA 01 · La familia</div>
+    </div>
+    <div style="position:relative;border-radius:4px;overflow:hidden;">
+      <img src="B2.jpg" alt="Pieza 2 — Están a salvo" style="width:100%;display:block;aspect-ratio:1;object-fit:cover;">
+      <div style="position:absolute;bottom:0;left:0;right:0;background:linear-gradient(to top,rgba(0,0,0,.8) 0%,transparent 100%);padding:.75rem;font-family:var(--mono);font-size:.6rem;color:rgba(255,255,255,.7);letter-spacing:.06em;">PIEZA 02 · Están a salvo</div>
+    </div>
+    <div style="position:relative;border-radius:4px;overflow:hidden;">
+      <img src="B3.jpg" alt="Pieza 3 — El padre" style="width:100%;display:block;aspect-ratio:1;object-fit:cover;">
+      <div style="position:absolute;bottom:0;left:0;right:0;background:linear-gradient(to top,rgba(0,0,0,.8) 0%,transparent 100%);padding:.75rem;font-family:var(--mono);font-size:.6rem;color:rgba(255,255,255,.7);letter-spacing:.06em;">PIEZA 03 · El padre · 36 años</div>
+    </div>
+    <div style="position:relative;border-radius:4px;overflow:hidden;">
+      <img src="B4.jpg" alt="Pieza 4 — La madre" style="width:100%;display:block;aspect-ratio:1;object-fit:cover;">
+      <div style="position:absolute;bottom:0;left:0;right:0;background:linear-gradient(to top,rgba(0,0,0,.8) 0%,transparent 100%);padding:.75rem;font-family:var(--mono);font-size:.6rem;color:rgba(255,255,255,.7);letter-spacing:.06em;">PIEZA 04 · La madre · 34 años</div>
+    </div>
+    <div style="position:relative;border-radius:4px;overflow:hidden;">
+      <img src="b5.jpg" alt="Pieza 5 — Los niños" style="width:100%;display:block;aspect-ratio:1;object-fit:cover;">
+      <div style="position:absolute;bottom:0;left:0;right:0;background:linear-gradient(to top,rgba(0,0,0,.8) 0%,transparent 100%);padding:.75rem;font-family:var(--mono);font-size:.6rem;color:rgba(255,255,255,.7);letter-spacing:.06em;">PIEZA 05 · Los niños · 11 y 8 años</div>
+    </div>
+    <div style="position:relative;border-radius:4px;overflow:hidden;">
+      <img src="b6.jpg" alt="Pieza 6 — La niña" style="width:100%;display:block;aspect-ratio:1;object-fit:cover;">
+      <div style="position:absolute;bottom:0;left:0;right:0;background:linear-gradient(to top,rgba(0,0,0,.8) 0%,transparent 100%);padding:.75rem;font-family:var(--mono);font-size:.6rem;color:rgba(255,255,255,.7);letter-spacing:.06em;">PIEZA 06 · La niña · 5 años</div>
+    </div>
+  </div>
+
+  <!-- RESULTADOS -->
+  <div class="section-marker">
+    <span class="sm-num">05</span><div class="sm-line"></div><span class="sm-label">Resultados y ética</span>
+  </div>
+  <h2 class="section-title">La comunicación <em>se convirtió en acción</em></h2>
+
+  <div class="results-grid">
+    <div class="result-cell">
+      <span class="result-num">01</span>
+      <span class="result-label">Resultado</span>
+      <span class="result-text">La campaña logró movilizar apoyo interno, demostrando que el storytelling aplicado estratégicamente puede transformar la comunicación en acción real.</span>
+    </div>
+    <div class="result-cell">
+      <span class="result-num">02</span>
+      <span class="result-label">Ética y enfoque</span>
+      <span class="result-text">Desarrollado respetando el anonimato y la dignidad de la familia, evitando la exposición de identidades y priorizando una narrativa centrada en la reconstrucción, no en la victimización.</span>
+    </div>
+    <div class="result-cell">
+      <span class="result-num">03</span>
+      <span class="result-label">Herramientas</span>
+      <span class="result-text">Dirección creativa, storytelling y conceptualización. Producción visual asistida por IA. Edición y postproducción en Adobe Photoshop.</span>
+    </div>
+  </div>
+
+  <!-- APRENDIZAJES -->
+  <div class="section-marker">
+    <span class="sm-num">06</span><div class="sm-line"></div><span class="sm-label">Aprendizajes</span>
+  </div>
+  <h2 class="section-title">Lo que este proyecto <em>enseñó</em></h2>
+
+  <div class="learnings">
+    <div class="learning-item">
+      <p class="learning-text">Las mejores ideas no nacen con libertad total. Nacen cuando hay límites claros.</p>
+    </div>
+    <div class="learning-item">
+      <p class="learning-text">La empatía se construye con lo específico, no con lo masivo.</p>
+    </div>
+    <div class="learning-item">
+      <p class="learning-text">La gente conecta más con alguien que lucha… que con alguien que solo sufre.</p>
+    </div>
+    <div class="learning-item">
+      <p class="learning-text">Las historias no deben explicarse, deben sentirse.</p>
+    </div>
+  </div>
+
+  <!-- NOTA ÉTICA -->
+  <div class="ethical-note">
+    <div class="en-label">Nota ética y de transparencia</div>
+    <p class="en-text">Campaña interna desarrollada y publicada con autorización de la empresa. Imágenes generadas por IA. Identidad de la familia protegida. Publicado con autorización. Los nombres de los integrantes de la familia no se divulgan en ningún material de esta campaña.</p>
+  </div>
+
+</article>
+
+<!-- FOOTER -->
+<footer>
+  <span class="f-brand">A prueba de fuego · A. Varela · 2025</span>
+  <ul class="f-links">
+    <li><a href="index.html">← Portafolio</a></li>
+    <li><a href="/cdn-cgi/l/email-protection#70111e14021511061102151c114340565346444b171d11191c5e131f1d">Contacto</a></li>
+  </ul>
+  <span class="f-copy">© 2026 · Honduras · Centroamérica</span>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+// PROGRESS BAR
+window.addEventListener('scroll',()=>{
+  const h=document.documentElement;
+  const pct=(h.scrollTop/(h.scrollHeight-h.clientHeight))*100;
+  document.getElementById('progressBar').style.width=pct+'%';
+});
+
+// NARRATIVE STEPPER
+let curN=0; const totalN=5;
+function narrativeNav(dir){
+  document.getElementById('ns'+curN).classList.remove('active');
+  const pips=document.querySelectorAll('.np-pip');
+  pips[curN].classList.remove('active'); pips[curN].classList.add('done');
+  curN=Math.max(0,Math.min(totalN-1,curN+dir));
+  document.getElementById('ns'+curN).classList.add('active');
+  pips[curN].classList.remove('done'); pips[curN].classList.add('active');
+  document.getElementById('nStep').textContent=(curN+1)+' / '+totalN;
+  document.getElementById('nPrev').style.visibility=curN>0?'visible':'hidden';
+  const nxt=document.getElementById('nNext');
+  if(curN===totalN-1){
+    nxt.textContent='Volver al inicio →';
+    nxt.onclick=()=>{
+      pips.forEach(p=>{p.classList.remove('active','done');});
+      pips[0].classList.add('active');
+      document.querySelectorAll('.narrative-stage').forEach(s=>s.classList.remove('active'));
+      curN=0; document.getElementById('ns0').classList.add('active');
+      document.getElementById('nStep').textContent='1 / '+totalN;
+      document.getElementById('nPrev').style.visibility='hidden';
+      nxt.textContent='Siguiente →'
