@@ -146,33 +146,73 @@ footer{background:var(--ink);padding:1.5rem 3rem;display:flex;align-items:center
   .learnings{grid-template-columns:1fr;}
   footer{flex-direction:column;text-align:center;}
 }
+
+/* ══ PRESSROOM SHARED ══ */
+.pr-ticker{background:#0e0e0e;color:#f5f5f5;font-family:'IBM Plex Mono',monospace;font-size:.6rem;letter-spacing:.08em;padding:.35rem 0;overflow:hidden;white-space:nowrap;border-bottom:2px solid #b83214;}
+.pr-ticker-inner{display:inline-flex;gap:3rem;animation:pr-tick 30s linear infinite;}
+.pr-ticker-label{background:#b83214;color:#fff;font-size:.58rem;letter-spacing:.1em;padding:.35rem .85rem;margin-right:1rem;font-weight:500;text-transform:uppercase;}
+.pr-ticker-dot{width:4px;height:4px;border-radius:50%;background:#00A6CB;display:inline-block;margin:0 .6rem;vertical-align:middle;}
+@keyframes pr-tick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.pr-masthead{border-bottom:3px solid #0e0e0e;padding:1.25rem 2rem .85rem;text-align:center;}
+.pr-masthead-meta{display:flex;justify-content:space-between;align-items:center;margin-bottom:.5rem;}
+.pr-masthead-date{font-family:'IBM Plex Mono',monospace;font-size:.58rem;color:#6a6a6a;letter-spacing:.1em;text-transform:uppercase;}
+.pr-masthead-section{font-family:'IBM Plex Mono',monospace;font-size:.58rem;color:#6a6a6a;letter-spacing:.1em;text-transform:uppercase;}
+.pr-masthead-title{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,4vw,3.2rem);font-weight:900;letter-spacing:-.04em;line-height:.95;color:#0e0e0e;margin-bottom:.2rem;}
+.pr-masthead-title span{color:#b83214;font-style:italic;}
+.pr-masthead-sub{font-family:'IBM Plex Mono',monospace;font-size:.58rem;letter-spacing:.15em;text-transform:uppercase;color:#6a6a6a;border-top:1px solid rgba(14,14,14,.12);border-bottom:1px solid rgba(14,14,14,.12);padding:.32rem 0;margin-top:.5rem;}
+.pr-catnav{border-bottom:2px solid #0e0e0e;background:rgba(245,245,245,.97);position:sticky;top:0;z-index:200;backdrop-filter:blur(8px);}
+.pr-catnav-inner{display:flex;align-items:center;justify-content:space-between;max-width:1280px;margin:0 auto;padding:0 2rem;}
+.pr-catlinks{display:flex;list-style:none;}
+.pr-catlinks a{font-family:'IBM Plex Mono',monospace;font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:#0e0e0e;text-decoration:none;padding:.6rem .95rem;display:block;border-right:1px solid rgba(14,14,14,.1);transition:background .15s,color .15s;}
+.pr-catlinks a:hover,.pr-catlinks .pr-active{background:#0e0e0e;color:#f5f5f5;}
+.pr-catlinks .pr-red{background:#b83214;color:#fff;}
+.pr-catnav-back{font-family:'IBM Plex Mono',monospace;font-size:.58rem;letter-spacing:.08em;color:#00818E;text-decoration:none;padding:.6rem 0;transition:color .2s;white-space:nowrap;}
+.pr-catnav-back:hover{color:#00A6CB;}
+.pr-footer{background:#0e0e0e;color:#f5f5f5;margin-top:3rem;}
+.pr-footer-top{max-width:1280px;margin:0 auto;padding:2rem 2rem 1.5rem;display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:2rem;border-bottom:1px solid rgba(255,255,255,.07);}
+.pr-footer-name{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:900;letter-spacing:-.03em;color:#f5f5f5;margin-bottom:.2rem;}
+.pr-footer-name span{color:#b83214;font-style:italic;}
+.pr-footer-role{font-family:'IBM Plex Mono',monospace;font-size:.55rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:.6rem;}
+.pr-footer-desc{font-size:.75rem;color:rgba(255,255,255,.35);line-height:1.6;}
+.pr-footer-col-title{font-family:'IBM Plex Mono',monospace;font-size:.55rem;letter-spacing:.15em;text-transform:uppercase;color:#00A6CB;margin-bottom:.7rem;padding-bottom:.4rem;border-bottom:1px solid rgba(255,255,255,.07);}
+.pr-footer-links{list-style:none;display:flex;flex-direction:column;gap:.32rem;}
+.pr-footer-links a{font-size:.75rem;color:rgba(255,255,255,.35);text-decoration:none;transition:color .2s;display:flex;align-items:center;gap:.35rem;}
+.pr-footer-links a:hover{color:#f5f5f5;}
+.pr-footer-links a::before{content:'→';font-size:.6rem;color:#00818E;}
+.pr-footer-bottom{max-width:1280px;margin:0 auto;padding:.75rem 2rem;display:flex;justify-content:space-between;}
+.pr-footer-copy{font-family:'IBM Plex Mono',monospace;font-size:.55rem;color:rgba(255,255,255,.18);letter-spacing:.06em;}
+@media(max-width:768px){.pr-catlinks{display:none;}.pr-footer-top{grid-template-columns:1fr;}.pr-masthead-title{font-size:1.8rem;}}
+
 </style>
 </head>
 <body>
 
-<!-- TICKER -->
-<div class="ticker">
-  <div class="ticker-inner">
-    <span><span class="ticker-dot"></span>A prueba de fuego · Storytelling humanitario</span>
-    <span><span class="ticker-dot"></span>Campaña interna · A. Varela · Diciembre 2025</span>
-    <span><span class="ticker-dot"></span>Comunicación estratégica · Anonimato · Empatía</span>
-    <span><span class="ticker-dot"></span>Storytelling · Imágenes IA · Dirección creativa</span>
-    <span><span class="ticker-dot"></span>A prueba de fuego · Storytelling humanitario</span>
-    <span><span class="ticker-dot"></span>Campaña interna · A. Varela · Diciembre 2025</span>
-    <span><span class="ticker-dot"></span>Comunicación estratégica · Anonimato · Empatía</span>
-    <span><span class="ticker-dot"></span>Storytelling · Imágenes IA · Dirección creativa</span>
+<div class="pr-ticker"><div class="pr-ticker-inner"><span><span class="pr-ticker-label">A. Varela</span>Análisis de datos · Narrativa visual · Honduras<span class="pr-ticker-dot"></span>Disponible para proyectos · ONGs · Agencias · Medios<span class="pr-ticker-dot"></span>andreavarela30 [arroba] gmail.com</span><span><span class="pr-ticker-label">A. Varela</span>Análisis de datos · Narrativa visual · Honduras<span class="pr-ticker-dot"></span>Disponible para proyectos · ONGs · Agencias · Medios<span class="pr-ticker-dot"></span>andreavarela30 [arroba] gmail.com</span></div></div>
+<div class="pr-masthead">
+  <div class="pr-masthead-meta">
+    <span class="pr-masthead-date">Honduras · Dic. 2025</span>
+    <span class="pr-masthead-section">Storytelling humanitario · Caso de estudio · Dic. 2025</span>
   </div>
+  <div class="pr-masthead-title">A. <span>Varela</span></div>
+  <div class="pr-masthead-sub">A prueba de fuego · Storytelling humanitario · Campaña interna · 2025</div>
 </div>
+<nav class="pr-catnav">
+  <div class="pr-catnav-inner">
+    <ul class="pr-catlinks">
+      <li><a href="index.html">Portafolio</a></li>
+      <li><a href="reportaje-ihss-honduras.html">IHSS</a></li>
+      <li><a href="hogar-diamante-portada.html">Hogar Diamante</a></li>
+      <li><a href="dia-del-nino-hogar-diamante.html">Día del Niño</a></li>
+      <li><a href="a-prueba-de-fuego.html" class="pr-red">A prueba de fuego</a></li>
+    </ul>
+    <a href="index.html" class="pr-catnav-back">← Portafolio</a>
+  </div>
+</nav>
+
+
 
 <!-- NAV -->
-<nav>
-  <a href="index.html" class="nav-brand">
-    <span class="nav-name">A. Varela</span>
-    <span class="nav-role">Analista · Honduras</span>
-  </a>
-  <div class="nav-progress"><div class="nav-progress-fill" id="progressBar"></div></div>
-  <span class="nav-right">Caso de estudio · Dic. 2025</span>
-</nav>
+
 
 <!-- COVER -->
 <header class="cover">
@@ -416,14 +456,7 @@ footer{background:var(--ink);padding:1.5rem 3rem;display:flex;align-items:center
 </article>
 
 <!-- FOOTER -->
-<footer>
-  <span class="f-brand">A prueba de fuego · A. Varela · 2025</span>
-  <ul class="f-links">
-    <li><a href="index.html">← Portafolio</a></li>
-    <li><a href="/cdn-cgi/l/email-protection#70111e14021511061102151c114340565346444b171d11191c5e131f1d">Contacto</a></li>
-  </ul>
-  <span class="f-copy">© 2026 · Honduras · Centroamérica</span>
-</footer>
+
 
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // PROGRESS BAR

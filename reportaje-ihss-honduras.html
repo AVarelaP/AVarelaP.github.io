@@ -175,22 +175,77 @@ blockquote cite{font-family:var(--mono);font-size:.6rem;color:var(--muted);font-
   .cover-bottom{padding:.75rem 1.5rem;}
   .report-footer{flex-direction:column;}
 }
+
+/* ══ PRESSROOM SHARED ══ */
+.pr-ticker{background:#0e0e0e;color:#f5f5f5;font-family:'IBM Plex Mono',monospace;font-size:.6rem;letter-spacing:.08em;padding:.35rem 0;overflow:hidden;white-space:nowrap;border-bottom:2px solid #b83214;}
+.pr-ticker-inner{display:inline-flex;gap:3rem;animation:pr-tick 30s linear infinite;}
+.pr-ticker-label{background:#b83214;color:#fff;font-size:.58rem;letter-spacing:.1em;padding:.35rem .85rem;margin-right:1rem;font-weight:500;text-transform:uppercase;}
+.pr-ticker-dot{width:4px;height:4px;border-radius:50%;background:#00A6CB;display:inline-block;margin:0 .6rem;vertical-align:middle;}
+@keyframes pr-tick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.pr-masthead{border-bottom:3px solid #0e0e0e;padding:1.25rem 2rem .85rem;text-align:center;}
+.pr-masthead-meta{display:flex;justify-content:space-between;align-items:center;margin-bottom:.5rem;}
+.pr-masthead-date{font-family:'IBM Plex Mono',monospace;font-size:.58rem;color:#6a6a6a;letter-spacing:.1em;text-transform:uppercase;}
+.pr-masthead-section{font-family:'IBM Plex Mono',monospace;font-size:.58rem;color:#6a6a6a;letter-spacing:.1em;text-transform:uppercase;}
+.pr-masthead-title{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,4vw,3.2rem);font-weight:900;letter-spacing:-.04em;line-height:.95;color:#0e0e0e;margin-bottom:.2rem;}
+.pr-masthead-title span{color:#b83214;font-style:italic;}
+.pr-masthead-sub{font-family:'IBM Plex Mono',monospace;font-size:.58rem;letter-spacing:.15em;text-transform:uppercase;color:#6a6a6a;border-top:1px solid rgba(14,14,14,.12);border-bottom:1px solid rgba(14,14,14,.12);padding:.32rem 0;margin-top:.5rem;}
+.pr-catnav{border-bottom:2px solid #0e0e0e;background:rgba(245,245,245,.97);position:sticky;top:0;z-index:200;backdrop-filter:blur(8px);}
+.pr-catnav-inner{display:flex;align-items:center;justify-content:space-between;max-width:1280px;margin:0 auto;padding:0 2rem;}
+.pr-catlinks{display:flex;list-style:none;}
+.pr-catlinks a{font-family:'IBM Plex Mono',monospace;font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:#0e0e0e;text-decoration:none;padding:.6rem .95rem;display:block;border-right:1px solid rgba(14,14,14,.1);transition:background .15s,color .15s;}
+.pr-catlinks a:hover,.pr-catlinks .pr-active{background:#0e0e0e;color:#f5f5f5;}
+.pr-catlinks .pr-red{background:#b83214;color:#fff;}
+.pr-catnav-back{font-family:'IBM Plex Mono',monospace;font-size:.58rem;letter-spacing:.08em;color:#00818E;text-decoration:none;padding:.6rem 0;transition:color .2s;white-space:nowrap;}
+.pr-catnav-back:hover{color:#00A6CB;}
+.pr-footer{background:#0e0e0e;color:#f5f5f5;margin-top:3rem;}
+.pr-footer-top{max-width:1280px;margin:0 auto;padding:2rem 2rem 1.5rem;display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:2rem;border-bottom:1px solid rgba(255,255,255,.07);}
+.pr-footer-name{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:900;letter-spacing:-.03em;color:#f5f5f5;margin-bottom:.2rem;}
+.pr-footer-name span{color:#b83214;font-style:italic;}
+.pr-footer-role{font-family:'IBM Plex Mono',monospace;font-size:.55rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:.6rem;}
+.pr-footer-desc{font-size:.75rem;color:rgba(255,255,255,.35);line-height:1.6;}
+.pr-footer-col-title{font-family:'IBM Plex Mono',monospace;font-size:.55rem;letter-spacing:.15em;text-transform:uppercase;color:#00A6CB;margin-bottom:.7rem;padding-bottom:.4rem;border-bottom:1px solid rgba(255,255,255,.07);}
+.pr-footer-links{list-style:none;display:flex;flex-direction:column;gap:.32rem;}
+.pr-footer-links a{font-size:.75rem;color:rgba(255,255,255,.35);text-decoration:none;transition:color .2s;display:flex;align-items:center;gap:.35rem;}
+.pr-footer-links a:hover{color:#f5f5f5;}
+.pr-footer-links a::before{content:'→';font-size:.6rem;color:#00818E;}
+.pr-footer-bottom{max-width:1280px;margin:0 auto;padding:.75rem 2rem;display:flex;justify-content:space-between;}
+.pr-footer-copy{font-family:'IBM Plex Mono',monospace;font-size:.55rem;color:rgba(255,255,255,.18);letter-spacing:.06em;}
+@media(max-width:768px){.pr-catlinks{display:none;}.pr-footer-top{grid-template-columns:1fr;}.pr-masthead-title{font-size:1.8rem;}}
+
 </style>
 </head>
 <body>
 
-<!-- NAV -->
-<nav>
-  <a href="#" class="nav-brand"><span>A. Varela</span> · Periodismo de datos</a>
-  <div class="nav-progress"><div class="nav-progress-fill" id="progressBar"></div></div>
-  <div class="nav-right">IHSS · 2016–2025</div>
+<div class="pr-ticker"><div class="pr-ticker-inner"><span><span class="pr-ticker-label">A. Varela</span>Análisis de datos · Narrativa visual · Honduras<span class="pr-ticker-dot"></span>Disponible para proyectos · ONGs · Agencias · Medios<span class="pr-ticker-dot"></span>andreavarela30 [arroba] gmail.com</span><span><span class="pr-ticker-label">A. Varela</span>Análisis de datos · Narrativa visual · Honduras<span class="pr-ticker-dot"></span>Disponible para proyectos · ONGs · Agencias · Medios<span class="pr-ticker-dot"></span>andreavarela30 [arroba] gmail.com</span></div></div>
+<div class="pr-masthead">
+  <div class="pr-masthead-meta">
+    <span class="pr-masthead-date">Honduras · 2025–2026</span>
+    <span class="pr-masthead-section">Salud pública · Análisis de datos · 2025</span>
+  </div>
+  <div class="pr-masthead-title">A. <span>Varela</span></div>
+  <div class="pr-masthead-sub">Análisis de datos · IHSS Honduras · 4.4 millones de casos · 2016–2025</div>
+</div>
+<nav class="pr-catnav">
+  <div class="pr-catnav-inner">
+    <ul class="pr-catlinks">
+      <li><a href="index.html">Portafolio</a></li>
+      <li><a href="reportaje-ihss-honduras.html">IHSS</a></li>
+      <li><a href="hogar-diamante-portada.html">Hogar Diamante</a></li>
+      <li><a href="dia-del-nino-hogar-diamante.html">Día del Niño</a></li>
+      <li><a href="a-prueba-de-fuego.html" class="pr-red">A prueba de fuego</a></li>
+    </ul>
+    <a href="index.html" class="pr-catnav-back">← Portafolio</a>
+  </div>
 </nav>
+
+<!-- NAV -->
+
 
 <!-- COVER -->
 <header class="cover">
   <div class="cover-main">
     <div>
-      <div class="cover-meta">Análisis · Salud pública · Honduras · 2026</div>
+      <div class="cover-meta">Análisis · Salud pública · Honduras · 2025</div>
       <div class="cover-kicker">Instituto Hondureño de Seguridad Social</div>
       <h1 class="cover-title">Enfermedades en el IHSS:<br>lo que los datos revelan<br>sobre la <em>salud</em><br>de los hondureños</h1>
       <p class="cover-deck">Nueve años de registros clínicos, 4.4 millones de casos y un patrón que se repite: las enfermedades que más agotan al sistema de salud son, en su mayoría, prevenibles. Este es un análisis de los datos oficiales del IHSS entre 2016 y 2025.</p>
@@ -402,7 +457,7 @@ blockquote cite{font-family:var(--mono);font-size:.6rem;color:var(--muted);font-
 
   <div class="callout callout-amber">
     <div class="callout-label">Advertencia sobre los datos geográficos</div>
-    <p>La concentración del 87% de los casos en dos departamentos <strong>no es un hallazgo epidemiológico — es un hallazgo de cobertura institucional.</strong> Interpretar estos datos como representativos del perfil de salud nacional sería un error metodológico grave. Honduras tiene 18 departamentos; este dataset refleja de forma significativa solo dos. Cualquier política pública o conclusión que se derive de estos datos debe considerar explícitamente esta brecha. <!--Fuente de referencia: <a href="https://portalunico.iaip.gob.hn/356/" target="_blank" rel="noopener" style="color:var(--teal);">Portal Único de Transparencia · IHSS</a>.</p> -->
+    <p>La concentración del 87% de los casos en dos departamentos <strong>no es un hallazgo epidemiológico — es un hallazgo de cobertura institucional.</strong> Interpretar estos datos como representativos del perfil de salud nacional sería un error metodológico grave. Honduras tiene 18 departamentos; este dataset refleja de forma significativa solo dos. Cualquier política pública o conclusión que se derive de estos datos debe considerar explícitamente esta brecha. Fuente de referencia: <a href="https://portalunico.iaip.gob.hn/356/" target="_blank" rel="noopener" style="color:var(--teal);">Portal Único de Transparencia · IHSS</a>.</p>
   </div>
 
   <div class="data-module">
@@ -450,7 +505,7 @@ blockquote cite{font-family:var(--mono);font-size:.6rem;color:var(--muted);font-
 
   <div class="callout callout-red" style="margin-top:2rem;">
     <div class="callout-label">Metodología y fuentes</div>
-    <p>Análisis basado en el dataset de morbilidad ambulatoria del IHSS (2016–2025), 20,056 registros únicos. Procesado con Python/pandas. Los datos de enero 2026 fueron excluidos por ser un año incompleto. Las visualizaciones representan frecuencias absolutas acumuladas por diagnóstico CIE-10, sexo y grupo etario. <strong>Fuentes primarias:Fuente primaria: IHSS Fuentes secundarias:</strong> <a href="https://www.paho.org/es/documentos/informe-anual-2024-honduras" target="_blank" rel="noopener" style="color:var(--teal);">OPS/OMS · Informe Honduras 2024</a><br>
+    <p>Análisis basado en el dataset de morbilidad ambulatoria del IHSS (2016–2025), 20,056 registros únicos. Procesado con Python/pandas. Los datos de enero 2026 fueron excluidos por ser un año incompleto. Las visualizaciones representan frecuencias absolutas acumuladas por diagnóstico CIE-10, sexo y grupo etario. <strong>Fuentes primarias:</strong> <a href="https://www.ihss.hn/el-ihss-en-cifras/" target="_blank" rel="noopener" style="color:var(--teal);">IHSS · Sistema de morbilidad ambulatoria</a> · <a href="https://portalunico.iaip.gob.hn/356/" target="_blank" rel="noopener" style="color:var(--teal);">Portal Único de Transparencia Honduras</a>. <strong>Fuentes secundarias:</strong> <a href="https://www.paho.org/es/documentos/informe-anual-2024-honduras" target="_blank" rel="noopener" style="color:var(--teal);">OPS/OMS · Informe Honduras 2024</a><br>
     Fuente de contexto: <a href="https://www.cepal.org/es/temas/empleo" target="_blank" rel="noopener" style="color:var(--teal);">CEPAL · Informalidad laboral Honduras 82% · 2024</a> · <a href="https://www.paho.org/es/honduras" target="_blank" rel="noopener" style="color:var(--red);">OPS · Página Honduras</a>. El dataset completo y el código de análisis están disponibles en el repositorio de GitHub.</p>
   </div>
 
@@ -488,15 +543,7 @@ blockquote cite{font-family:var(--mono);font-size:.6rem;color:var(--muted);font-
 </article>
 
 <!-- FOOTER -->
-<footer class="report-footer">
-  <div class="rf-brand">A. Varela · Analista</div>
-  <div class="rf-meta">Publicado en 2026 · Honduras</div>
-  <div class="rf-source">
-    Fuente primaria: <a href="https://www.ihss.hn/el-ihss-en-cifras/" target="_blank" rel="noopener" style="color:var(--teal);">IHSS · ihss.hn/el-ihss-en-cifras</a><br>
-    Fuente secundaria: <a href="https://www.paho.org/es/documentos/informe-anual-2024-honduras" target="_blank" rel="noopener" style="color:var(--teal);">OPS/OMS · Informe Honduras 2024</a><br>
-    Fuente de contexto: <a href="https://www.cepal.org/es/temas/empleo" target="_blank" rel="noopener" style="color:var(--teal);">CEPAL · Informalidad laboral Honduras 82% · 2024</a>
-  </div>
-</footer>
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <script>
@@ -676,5 +723,6 @@ function nextQ() {
   if(pips[curQ]) pips[curQ].classList.add('active');
 }
 </script>
+<footer class="pr-footer"><div class="pr-footer-top"><div><div class="pr-footer-name">A. <span>Varela</span></div><div class="pr-footer-role">Analista · Honduras · 2026</div><p class="pr-footer-desc">Analista y narradora de datos con enfoque en Honduras y Centroamérica. Narrativa visual, comunicación estratégica y UX/UI editorial.</p></div><div><div class="pr-footer-col-title">Proyectos</div><ul class="pr-footer-links"><li><a href="reportaje-ihss-honduras.html">Enfermedades en el IHSS</a></li><li><a href="hogar-diamante-portada.html">Hogar Diamante · Portada</a></li><li><a href="dia-del-nino-hogar-diamante.html">Día del Niño · Crónica</a></li><li><a href="a-prueba-de-fuego.html">A prueba de fuego</a></li></ul></div><div><div class="pr-footer-col-title">Contacto</div><ul class="pr-footer-links"><li><a href="#">andreavarela30 [arroba] gmail.com</a></li><li><a href="tel:+50431790011">+504 3179-0011</a></li><li><a href="https://github.com/AVarelaP" target="_blank" rel="noopener">github.com/AVarelaP</a></li><li><a href="index.html">← Portafolio</a></li></ul></div></div><div class="pr-footer-bottom"><span class="pr-footer-copy">© 2026 · A. Varela · Honduras · Centroamérica</span><span class="pr-footer-copy">Narrativa de datos · UX/UI Editorial</span></div></footer>
 </body>
 </html>
